@@ -11,10 +11,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.constants.DRIVE;
+import frc.robot.Constants.DRIVE;
 
 /** Add your docs here. */
 public class Drive {
@@ -22,6 +24,14 @@ public class Drive {
     TalonFX rightMaster = new TalonFX(DRIVE.rightMasterCANID);
     TalonFX leftMinion = new TalonFX(DRIVE.leftMinionCANID);
     TalonFX rightMinion = new TalonFX(DRIVE.rightMinionCANID);
+    AHRS navX = new AHRS();
+    private double distance; 
+    private double leftPosNative, rightPosNative, 
+                   leftPosInch, rightPosInch, 
+                   leftVelInch, rightVelInch, 
+                   leftVelNative, rightVelNative, 
+                   averageNativeDistance, averageInchesDistance, 
+                   averageNativePer100ms, averageInchesPerSec;
     private Drive()
     {
         //sets factory defualt, good?
@@ -34,6 +44,13 @@ public class Drive {
         rightMaster.setNeutralMode(NeutralMode.Brake);
         leftMinion.setNeutralMode(NeutralMode.Brake);
         rightMinion.setNeutralMode(NeutralMode.Brake);
+
+        //gets velocity in past 10ms when determining what velocity to have (motion magic)
+        leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+
+        //how many velocities to compare/average?
+        //?     test later
+        //TODO leftMaster.configVelocityMeasurementWindow(32);
 
         //what this do?
         //?     test later
@@ -109,11 +126,53 @@ public class Drive {
         SmartDashboard.putNumber("statorCurrent", leftMaster.getStatorCurrent());
         SmartDashboard.putNumber("supplyCurrent", leftMaster.getSupplyCurrent());
         SmartDashboard.putNumber("temp", leftMaster.getTemperature());
+
+        SmartDashboard.putNumber("averageInchDist", averageInchesDistance);
+        SmartDashboard.putNumber("averageInchVel", averageInchesPerSec);
+        SmartDashboard.putNumber("distance to target", (distance - averageInchesDistance));
+
+        leftPosNative = leftMaster.getSelectedSensorPosition();
+        rightPosNative = rightMaster.getSelectedSensorPosition();
+        averageNativeDistance = (leftPosNative + rightPosNative) / 2.0;
+
+        leftPosInch = MkUtil.nativeToInches(leftPosNative);
+        rightPosInch = MkUtil.nativeToInches(rightPosNative);
+        averageInchesDistance = (leftPosInch + rightPosInch) / 2.0;
+
+        leftVelNative = leftMaster.getSelectedSensorVelocity();
+        rightVelNative = rightMaster.getSelectedSensorVelocity();
+        averageNativePer100ms = (leftVelNative + rightVelNative) / 2.0;
+
+        leftVelInch = MkUtil.nativePer100MstoInchesPerSec(leftVelNative);
+        rightVelInch = MkUtil.nativePer100MstoInchesPerSec(rightVelNative);
+        averageInchesPerSec = (leftVelInch + rightVelInch) / 2.0;
     }
 
+    public void setMagic(double magical)
+    {
+        leftMaster.configMotionCruiseVelocity(1095);
+        leftMaster.configMotionAcceleration(674);
+        rightMaster.configMotionCruiseVelocity(1095);
+        rightMaster.configMotionAcceleration(674);
+        distance = magical;
+        resetStuff();
+    }
     public void motionMagical()
     {
-        leftMaster.set(ControlMode.MotionMagic);
+        leftMaster.set(ControlMode.MotionMagic, MkUtil.inchesToNative(distance));
+        rightMaster.set(ControlMode.MotionMagic, MkUtil.inchesToNative(distance));
+    }
+
+    public boolean isMotionDone()
+    {
+        return Math.abs(distance - averageInchesDistance) < 0.5 && averageInchesPerSec < 0.1;
+    }
+
+    public void resetStuff()
+    {
+        navX.zeroYaw();
+        leftMaster.setSelectedSensorPosition(0);
+        rightMaster.setSelectedSensorPosition(0);
     }
     
     private static class InstanceHolder

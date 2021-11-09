@@ -34,10 +34,16 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    mDrive.setMagic(12);
+  }
 
   @Override
   public void teleopPeriodic() {
+    if(mDrive.isMotionDone() == false)
+    {
+      mDrive.motionMagical();
+    }
     mDrive.updateDrive();
   }
 
