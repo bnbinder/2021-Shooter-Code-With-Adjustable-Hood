@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Drive;
 
 /**
@@ -21,6 +23,9 @@ public class Robot extends TimedRobot {
 
   private Drive mDrive = Drive.getInstance();
 
+  private Timer LeTimer = new Timer();
+  private Timer endTime = new Timer();
+
   @Override
   public void robotInit() {}
 
@@ -36,6 +41,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     mDrive.setMagic(12);
+    LeTimer.start();
   }
 
   @Override
@@ -45,13 +51,25 @@ public class Robot extends TimedRobot {
       mDrive.motionMagical();
     }
     mDrive.updateDrive();
+    SmartDashboard.putNumber("time", LeTimer.get());
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    LeTimer.stop();
+    //this is swerdlow idea, very useful
+    endTime.start();
+
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    if(endTime.get() > 1.5)
+    {
+      //do stuff
+      endTime.stop();
+    }
+  }
 
   @Override
   public void testInit() {}
