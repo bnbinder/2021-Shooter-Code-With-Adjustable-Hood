@@ -6,6 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Drive;
 
@@ -22,9 +24,12 @@ public class Robot extends TimedRobot {
    */
 
   private Drive mDrive = Drive.getInstance();
+  private Shooter mShoot = Shooter.getInstance();
 
   private Timer LeTimer = new Timer();
   private Timer endTime = new Timer();
+
+  private XboxController xbox = new XboxController(0);
 
   @Override
   public void robotInit() {}
@@ -40,18 +45,38 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    mDrive.setMagic(12);
+    //mDrive.setMagic(12);
     LeTimer.start();
   }
 
   @Override
   public void teleopPeriodic() {
+    if(xbox.getRawAxis(2) > 0)
+    {
+      mDrive.setDrivePercent(xbox.getRawAxis(2), xbox.getRawAxis(2));
+    }
+    else if(xbox.getRawAxis(3) > 0)
+    {
+      mDrive.setDrivePercent(-xbox.getRawAxis(3), -xbox.getRawAxis(3));
+    }
+    else
+    {
+      mDrive.setDrivePercent(0, 0);
+    }
+    if(xbox.getRawAxis(1) > 0)
+      {mShoot.shootPercent(xbox.getRawAxis(1), xbox.getRawAxis(1));}
+    
+    else  {mShoot.shootPercent(0,0);}
+
     if(mDrive.isMotionDone() == false)
     {
-      mDrive.motionMagical();
+     // mDrive.motionMagical();
     }
     mDrive.updateDrive();
+    mShoot.updateShoot();
+    SmartDashboard.putBoolean("abut", xbox.getAButton());
     SmartDashboard.putNumber("time", LeTimer.get());
+    
   }
 
   @Override

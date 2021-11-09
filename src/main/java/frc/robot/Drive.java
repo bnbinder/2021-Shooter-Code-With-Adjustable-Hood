@@ -40,13 +40,23 @@ public class Drive {
         rightMinion.configFactoryDefault();
         leftMinion.configFactoryDefault();
     
-        leftMaster.setNeutralMode(NeutralMode.Brake);
-        rightMaster.setNeutralMode(NeutralMode.Brake);
-        leftMinion.setNeutralMode(NeutralMode.Brake);
-        rightMinion.setNeutralMode(NeutralMode.Brake);
+        leftMaster.setNeutralMode(NeutralMode.Coast);
+        rightMaster.setNeutralMode(NeutralMode.Coast);
+        leftMinion.setNeutralMode(NeutralMode.Coast);
+        rightMinion.setNeutralMode(NeutralMode.Coast);
+
+        leftMaster.config_kP(0, DRIVE.kP);
+        leftMaster.config_kI(0, DRIVE.kI);
+        leftMaster.config_kD(0, DRIVE.kD);
+        leftMaster.config_kF(0, DRIVE.kF);
+
+        rightMaster.config_kP(0, DRIVE.kP);
+        rightMaster.config_kI(0, DRIVE.kI);
+        rightMaster.config_kD(0, DRIVE.kD);
+        rightMaster.config_kF(0, DRIVE.kF);
 
         //gets velocity in past 10ms when determining what velocity to have (motion magic)
-        leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        //!leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
 
         //how many velocities to compare/average?
         //?     test later
@@ -77,11 +87,11 @@ public class Drive {
 
         //during open loop, 0.5 seconds before motor go from 0 to selected output
         //?     test later
-        //!leftMaster.configOpenloopRamp(0.5);
+        //!leftMaster.configOpenloopRamp(DRIVE.driveOpenRampRate);
 
         //during close loop, 0.5 seconds before motor go from 0 to selected output
         //?     test later
-        //!leftMaster.configClosedloopRamp(0.5);
+        //!leftMaster.configClosedloopRamp(DRIVE.driveCloseRampRate);
 
         //sets pid fI to set number, but what is pidIdx?
         //?     research
@@ -109,14 +119,29 @@ public class Drive {
         //?     research
         //!leftMaster.enableVoltageCompensation(true);
         //!leftMaster.configVoltageCompSaturation(10);
+
+        //peak output 10% forward and back?
+        //?     research and test
+        //!leftMaster.configPeakOutputForward(10);
+        //!leftMaster.configPeakOutputReverse(10);
     }
     public static Drive getInstance()
     {
         return InstanceHolder.mInstance;
     }
 
+    public void setDrivePercent(double leftOutput, double rightOutput)
+    {
+        leftMaster.set(ControlMode.PercentOutput, leftOutput);
+        rightMaster.set(ControlMode.PercentOutput, rightOutput);
+        leftMinion.set(ControlMode.PercentOutput, leftOutput);
+        rightMinion.set(ControlMode.PercentOutput, rightOutput);
+    }
+
     public void updateDrive()
     {
+        rightMaster.setInverted(true);
+        rightMinion.setInverted(true);
         //see shit and stuff
         SmartDashboard.putNumber("busVoltage", leftMaster.getBusVoltage());
         SmartDashboard.putNumber("output%", leftMaster.getMotorOutputPercent());
@@ -126,6 +151,15 @@ public class Drive {
         SmartDashboard.putNumber("statorCurrent", leftMaster.getStatorCurrent());
         SmartDashboard.putNumber("supplyCurrent", leftMaster.getSupplyCurrent());
         SmartDashboard.putNumber("temp", leftMaster.getTemperature());
+
+        SmartDashboard.putNumber("rbusVoltage", rightMaster.getBusVoltage());
+        SmartDashboard.putNumber("routput%", rightMaster.getMotorOutputPercent());
+        SmartDashboard.putNumber("routputVoltage", rightMaster.getMotorOutputVoltage());
+        SmartDashboard.putNumber("rsensorPos", rightMaster.getSelectedSensorPosition());
+        SmartDashboard.putNumber("rsensorVelocity", rightMaster.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("rstatorCurrent", rightMaster.getStatorCurrent());
+        SmartDashboard.putNumber("rsupplyCurrent", rightMaster.getSupplyCurrent());
+        SmartDashboard.putNumber("rtemp", rightMaster.getTemperature());
 
         SmartDashboard.putNumber("averageInchDist", averageInchesDistance);
         SmartDashboard.putNumber("averageInchVel", averageInchesPerSec);
