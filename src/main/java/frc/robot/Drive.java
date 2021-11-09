@@ -56,56 +56,67 @@ public class Drive {
         rightMaster.config_kF(0, DRIVE.kF);
 
         //gets velocity in past 10ms when determining what velocity to have (motion magic)
-        //!leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        //?     test and add later
+        //TODO leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
 
         //how many velocities to compare/average?
-        //?     test later
+        //?     test and add later
         //TODO leftMaster.configVelocityMeasurementWindow(32);
 
+        //enable and set the max amount of voltage a motor can use?
+        //?     research and add later
+        //!leftMaster.enableVoltageCompensation(true);
+        //!leftMaster.configVoltageCompSaturation(10);
+
+        //if motor takes longer than 20ms to get from start to finish, can bus not utilizing enough and stuff wrong?
+        //?     research and add later
+        //!leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        //!leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+        //peak output 10% forward and back?
+        //?     research and test
+        //!leftMaster.configPeakOutputForward(10);
+        //!leftMaster.configPeakOutputReverse(10);
+
+        //sets time (ms) of how long one loop in closed loop is?
+        //?     research and add later
+        //!leftMaster.configClosedLoopPeriod(0,1);
+
         //what this do?
-        //?     test later
+        //?     test and add later
         //!leftMaster.configAllowableClosedloopError(0, 1);
 
         //makes sure motors dont go above 1 (100%)?
-        //?     test later
+        //?     test and add later
         //!leftMaster.configClosedLoopPeakOutput(0, 1);
 
         //when input is below deadband but above/below zero, motors dont move
         //see documentation
-        //?     test later
+        //?     test and add later
         //!leftMaster.configNeutralDeadband(0.01);
 
         //what this do?
         //motor not go below this number when forward?
-        //?     test later
+        //?     test and add later
         //!leftMaster.configNominalOutputForward(0);
 
         //what this do?
         //motor not go below this number when backward?
-        //?     test later
+        //?     test and add later
         //!leftMaster.configNominalOutputReverse(0);
 
         //during open loop, 0.5 seconds before motor go from 0 to selected output
-        //?     test later
+        //?     test and add later
         //!leftMaster.configOpenloopRamp(DRIVE.driveOpenRampRate);
 
         //during close loop, 0.5 seconds before motor go from 0 to selected output
-        //?     test later
+        //?     test and add later
         //!leftMaster.configClosedloopRamp(DRIVE.driveCloseRampRate);
 
         //sets pid fI to set number, but what is pidIdx?
         //?     research
         //!leftMaster.setIntegralAccumulator(iaccum, pidIdx, timeoutMs));
         //!leftMaster.setIntegralAccumulator(iaccum);
-
-        //if motor takes longer than 20ms to get from start to finish, can bus not utilizing enough and stuff wrong?
-        //?     research
-        //!leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
-        //!leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
-
-        //sets time (ms) of how long one loop in closed loop is?
-        //?     research
-        //!leftMaster.configClosedLoopPeriod(0,1);
 
         //limits motor output (how much motor uses)?
         //?     research
@@ -114,16 +125,6 @@ public class Drive {
         //limits motor input (how much motor takes)?
         //?     research
         //!leftMaster.configSupplyCurrentLimit();
-
-        //enable and set the max amount of voltage a motor can use?
-        //?     research
-        //!leftMaster.enableVoltageCompensation(true);
-        //!leftMaster.configVoltageCompSaturation(10);
-
-        //peak output 10% forward and back?
-        //?     research and test
-        //!leftMaster.configPeakOutputForward(10);
-        //!leftMaster.configPeakOutputReverse(10);
     }
     public static Drive getInstance()
     {

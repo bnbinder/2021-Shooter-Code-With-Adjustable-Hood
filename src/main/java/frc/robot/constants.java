@@ -34,6 +34,10 @@ public final class Constants {
         public static int shootLeftCANID = 5;
         public static int shootHoodCANID = 8; 
          
+        public static double kP = 1;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double kF = 0;
         
     }
 }

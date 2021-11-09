@@ -50,7 +50,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic() 
+  {
     if(xbox.getRawAxis(2) > 0)
     {
       mDrive.setDrivePercent(xbox.getRawAxis(2), xbox.getRawAxis(2));
@@ -63,10 +64,18 @@ public class Robot extends TimedRobot {
     {
       mDrive.setDrivePercent(0, 0);
     }
+
+
     if(xbox.getRawAxis(1) > 0)
-      {mShoot.shootPercent(xbox.getRawAxis(1), xbox.getRawAxis(1));}
-    
-    else  {mShoot.shootPercent(0,0);}
+    {
+      mShoot.shootPercent(xbox.getRawAxis(1), xbox.getRawAxis(1));
+    }
+    else
+    {
+      mShoot.shootPercent(0,0);
+    }
+
+
 
     if(mDrive.isMotionDone() == false)
     {

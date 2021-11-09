@@ -32,17 +32,17 @@ public class Shooter {
         ShootHood.setNeutralMode(NeutralMode.Coast);
         ShootRight.setNeutralMode(NeutralMode.Coast);
         ShootLeft.setNeutralMode(NeutralMode.Coast);
-        /*
-        ShootLeft.config_kP(0, DRIVE.kP);
-        ShootLeft.config_kI(0, DRIVE.kI);
-        ShootLeft.config_kD(0, DRIVE.kD);
-        ShootLeft.config_kF(0, DRIVE.kF);
+        
+        ShootLeft.config_kP(0, SHOOT.kP);
+        ShootLeft.config_kI(0, SHOOT.kI);
+        ShootLeft.config_kD(0, SHOOT.kD);
+        ShootLeft.config_kF(0, SHOOT.kF);
 
-        ShootRight.config_kP(0, DRIVE.kP);
-        ShootRight.config_kI(0, DRIVE.kI);
-        ShootRight.config_kD(0, DRIVE.kD);
-        ShootRight.config_kF(0, DRIVE.kF);
-        */
+        ShootRight.config_kP(0, SHOOT.kP);
+        ShootRight.config_kI(0, SHOOT.kI);
+        ShootRight.config_kD(0, SHOOT.kD);
+        ShootRight.config_kF(0, SHOOT.kF);
+        
     }
     
     public static Shooter getInstance()
@@ -75,6 +75,11 @@ public class Shooter {
     {
         ShootLeft.set(ControlMode.PercentOutput, shootL);
         ShootRight.set(ControlMode.PercentOutput, shootR);
+    }
+
+    public void shootVelocity(double vel)
+    {
+        ShootLeft.set(ControlMode.Velocity, vel);
     }
     
     private static class InstanceHolder
