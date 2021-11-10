@@ -81,6 +81,16 @@ public class Shooter {
     {
         ShootLeft.set(ControlMode.Velocity, vel);
     }
+
+    public void shootPos(double pos)
+    {
+        ShootHood.setSelectedSensorPosition(pos)
+    }
+
+    public void shootPPPPPos(double pos)
+    {
+        ShootHood.set(ControlMode.Position, pos);
+    }
     
     private static class InstanceHolder
     {
