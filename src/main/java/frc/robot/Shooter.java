@@ -84,7 +84,7 @@ public class Shooter {
 
     public void shootPos(double pos)
     {
-        ShootHood.setSelectedSensorPosition(pos)
+        ShootHood.setSelectedSensorPosition(pos);
     }
 
     public void shootPPPPPos(double pos)
