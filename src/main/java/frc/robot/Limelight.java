@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
+import frc.robot.Constants.SHOOT;
 
 /** Add your docs here. */
 public class Limelight {
@@ -18,14 +20,15 @@ public class Limelight {
     private NetworkTableEntry areaOfTarget = table.getEntry("ta");
     private NetworkTableEntry pipeline = table.getEntry("pipeline");
     private TrapezoidProfile.Constraints constraint = new TrapezoidProfile.Constraints();
+    private PIDController shootController = new PIDController(SHOOT.kP, SHOOT.kI, SHOOT.kD);
 
     private Limelight()
     {
         pipeline.setValue(0);
     }
 
-    public void findTarget()
+    public void updateAutoShoot()
     {
-
+        shootController.
     }
 }
