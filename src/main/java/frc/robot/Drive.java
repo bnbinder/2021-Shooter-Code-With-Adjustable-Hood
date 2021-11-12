@@ -17,6 +17,7 @@ import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DRIVE;
@@ -166,8 +167,8 @@ public class Drive {
         SmartDashboard.putNumber("rsupplyCurrent", rightMaster.getSupplyCurrent());
         SmartDashboard.putNumber("rtemp", rightMaster.getTemperature());
 
-        SmartDashboard.putNumber("odometryY", odometry.getPoseMeters().getY());
-        SmartDashboard.putNumber("odometryX", odometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("odometryY", MkUtil.nativePer100MstoInchesPerSec(odometry.getPoseMeters().getY()));
+        SmartDashboard.putNumber("odometryX", MkUtil.nativePer100MstoInchesPerSec(odometry.getPoseMeters().getY()));
         SmartDashboard.putNumber("odometrydeg", odometry.getPoseMeters().getRotation().getDegrees());
 
         SmartDashboard.putNumber("averageInchDist", averageInchesDistance);
@@ -290,6 +291,12 @@ public class Drive {
 
     
         odometry.update(navX.getRotation2d(), leftMaster.getSelectedSensorPosition(), rightMaster.getSelectedSensorPosition());
+    }
+
+    public void resetOdo()
+    {
+        resetStuff();
+        odometry.resetPosition(new Pose2d(), navX.getRotation2d());
     }
 
     public void setMagic(double magical)

@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     //mDrive.setMagic(12);
     LeTimer.start();
+    mDrive.resetOdo();
   }
 
   @Override
@@ -93,6 +94,7 @@ public class Robot extends TimedRobot {
     LeTimer.stop();
     //this is swerdlow idea, very useful
     endTime.start();
+    mDrive.resetOdo();
 
   }
 
