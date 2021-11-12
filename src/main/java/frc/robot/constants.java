@@ -36,6 +36,10 @@ public final class Constants {
         public static int shootRightCANID = 7;
         public static int shootLeftCANID = 5;
         public static int shootHoodCANID = 8; 
+
+        public static double maxAutoVelocity = 0;
+        public static double maxAutoAcceleration = 0;
+        //TODO find and set these
          
         public static double kP = 1;
         public static double kI = 0;

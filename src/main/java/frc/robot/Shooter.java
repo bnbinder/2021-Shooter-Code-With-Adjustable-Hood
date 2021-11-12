@@ -31,6 +31,7 @@ public class Shooter {
         ShootLeft.configFactoryDefault();
         ShootRight.configFactoryDefault();
         ShootHood.configFactoryDefault();
+
     
         ShootHood.setNeutralMode(NeutralMode.Coast);
         ShootRight.setNeutralMode(NeutralMode.Coast);
