@@ -6,6 +6,8 @@ package frc.robot;
 
 import java.util.ResourceBundle.Control;
 
+import javax.management.remote.rmi.RMIIIOPServerImpl;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
@@ -15,6 +17,7 @@ import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DRIVE;
 
@@ -25,6 +28,7 @@ public class Drive {
     TalonFX leftMinion = new TalonFX(DRIVE.leftMinionCANID);
     TalonFX rightMinion = new TalonFX(DRIVE.rightMinionCANID);
     AHRS navX = new AHRS();
+    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(navX.getRotation2d());
     private double distance; 
     private double leftPosNative, rightPosNative, 
                    leftPosInch, rightPosInch, 
@@ -162,6 +166,10 @@ public class Drive {
         SmartDashboard.putNumber("rsupplyCurrent", rightMaster.getSupplyCurrent());
         SmartDashboard.putNumber("rtemp", rightMaster.getTemperature());
 
+        SmartDashboard.putNumber("odometryY", odometry.getPoseMeters().getY());
+        SmartDashboard.putNumber("odometryX", odometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("odometrydeg", odometry.getPoseMeters().getRotation().getDegrees());
+
         SmartDashboard.putNumber("averageInchDist", averageInchesDistance);
         SmartDashboard.putNumber("averageInchVel", averageInchesPerSec);
         SmartDashboard.putNumber("distance to target", (distance - averageInchesDistance));
@@ -181,6 +189,107 @@ public class Drive {
         leftVelInch = MkUtil.nativePer100MstoInchesPerSec(leftVelNative);
         rightVelInch = MkUtil.nativePer100MstoInchesPerSec(rightVelNative);
         averageInchesPerSec = (leftVelInch + rightVelInch) / 2.0;
+
+
+
+        leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        leftMaster.configVelocityMeasurementWindow(32);
+
+        leftMinion.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        leftMinion.configVelocityMeasurementWindow(32);
+
+        rightMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        rightMaster.configVelocityMeasurementWindow(32);
+
+        rightMinion.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        rightMinion.configVelocityMeasurementWindow(32);
+
+
+
+        leftMaster.enableVoltageCompensation(true);
+        leftMaster.configVoltageCompSaturation(12);
+
+        leftMinion.enableVoltageCompensation(true);
+        leftMinion.configVoltageCompSaturation(12);
+
+        rightMaster.enableVoltageCompensation(true);
+        rightMaster.configVoltageCompSaturation(12);
+
+        rightMinion.enableVoltageCompensation(true);
+        rightMinion.configVoltageCompSaturation(12);
+
+
+
+        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+        leftMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        leftMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+        rightMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        rightMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+
+
+        leftMaster.configPeakOutputForward(1);
+        leftMaster.configPeakOutputReverse(.80);
+
+        leftMinion.configPeakOutputForward(1);
+        leftMinion.configPeakOutputReverse(.80);
+
+        rightMaster.configPeakOutputForward(1);
+        rightMaster.configPeakOutputReverse(.80);
+
+        rightMinion.configPeakOutputForward(1);
+        rightMinion.configPeakOutputReverse(.80);
+
+
+
+        leftMaster.configClosedLoopPeakOutput(0, 1);
+        leftMinion.configClosedLoopPeakOutput(0, 1);
+        rightMaster.configClosedLoopPeakOutput(0, 1);
+        rightMinion.configClosedLoopPeakOutput(0, 1);
+
+
+
+        leftMaster.configOpenloopRamp(DRIVE.driveOpenRampRate);
+        leftMinion.configOpenloopRamp(DRIVE.driveOpenRampRate);
+        rightMaster.configOpenloopRamp(DRIVE.driveOpenRampRate);
+        rightMinion.configOpenloopRamp(DRIVE.driveOpenRampRate);
+
+
+
+        leftMaster.configClosedloopRamp(DRIVE.driveCloseRampRate);
+        leftMinion.configClosedloopRamp(DRIVE.driveCloseRampRate);
+        rightMaster.configClosedloopRamp(DRIVE.driveCloseRampRate);
+        rightMinion.configClosedloopRamp(DRIVE.driveCloseRampRate);
+
+
+        leftMaster.configMotionSCurveStrength(6);
+        leftMinion.configMotionSCurveStrength(6);
+        rightMaster.configMotionSCurveStrength(6);
+        rightMinion.configMotionSCurveStrength(6);
+        //swerd code said 6, so 6 it is
+
+
+        leftMaster.configAllowableClosedloopError(0, 1);
+        leftMinion.configAllowableClosedloopError(0, 1);
+        rightMaster.configAllowableClosedloopError(0, 1);
+        rightMinion.configAllowableClosedloopError(0, 1);
+        //this too, since sensor units are super big, so 1 is small i guess
+    
+    
+        leftMaster.configNeutralDeadband(0.001); 
+        leftMinion.configNeutralDeadband(0.001); 
+        rightMaster.configNeutralDeadband(0.001); 
+        rightMinion.configNeutralDeadband(0.001); 
+        //these are useless, but since in the swerd code, he is god so he knows best
+
+    
+        odometry.update(navX.getRotation2d(), leftMaster.getSelectedSensorPosition(), rightMaster.getSelectedSensorPosition());
     }
 
     public void setMagic(double magical)
