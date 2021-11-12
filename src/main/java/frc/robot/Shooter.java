@@ -8,7 +8,10 @@ import frc.robot.Constants.SHOOT;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.fasterxml.jackson.databind.util.ArrayBuilders.ShortBuilder;
 
 /** Add your docs here. */
 public class Shooter {
@@ -69,6 +72,79 @@ public class Shooter {
         leftShootVelInch = MkUtil.nativePer100MstoInchesPerSec(leftShootVelNative);
         rightShootVelInch = MkUtil.nativePer100MstoInchesPerSec(rightShootVelNative);
         averageShootInchesPerSec = (leftShootVelInch + rightShootVelInch) / 2.0;
+
+
+        ShootLeft.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        ShootLeft.configVelocityMeasurementWindow(32);
+
+        ShootRight.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        ShootRight.configVelocityMeasurementWindow(32);
+
+
+
+        ShootLeft.enableVoltageCompensation(true);
+        ShootLeft.configVoltageCompSaturation(12);
+
+        ShootRight.enableVoltageCompensation(true);
+        ShootRight.configVoltageCompSaturation(12);
+
+        ShootHood.enableVoltageCompensation(true);
+        ShootHood.configVoltageCompSaturation(12);
+
+
+
+
+        ShootLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        ShootLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+        ShootRight.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        ShootRight.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+        ShootHood.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        ShootHood.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+
+
+        ShootLeft.configPeakOutputForward(1);
+        ShootLeft.configPeakOutputReverse(.4);
+
+        ShootRight.configPeakOutputForward(1);
+        ShootRight.configPeakOutputReverse(.4);
+
+        ShootHood.configPeakOutputForward(.3);
+        ShootHood.configPeakOutputReverse(.3);
+
+
+
+        ShootLeft.configClosedLoopPeakOutput(0, 1);
+        ShootRight.configClosedLoopPeakOutput(0, 1);
+        ShootHood.configClosedLoopPeakOutput(0, 1);
+
+
+
+        ShootLeft.configOpenloopRamp(SHOOT.shootOpenRampRate);
+        ShootRight.configOpenloopRamp(SHOOT.shootOpenRampRate);
+
+
+        ShootLeft.configClosedloopRamp(SHOOT.shootCloseRampRate);
+        ShootRight.configClosedloopRamp(SHOOT.shootCloseRampRate);
+
+
+        ShootLeft.configMotionSCurveStrength(6);
+        ShootRight.configMotionSCurveStrength(6);
+        //swerd code said 6, so 6 it is
+
+
+        ShootLeft.configAllowableClosedloopError(0, 1);
+        ShootRight.configAllowableClosedloopError(0, 1);
+        ShootHood.configAllowableClosedloopError(0, 1);
+        //this too, since sensor units are super big, so 1 is small i guess
+    
+    
+        ShootLeft.configNeutralDeadband(0.001); 
+        ShootRight.configNeutralDeadband(0.001); 
+        ShootHood.configNeutralDeadband(0.001); 
+        //this too
     }
 
     public void shootPercent(double shootR, double shootL)

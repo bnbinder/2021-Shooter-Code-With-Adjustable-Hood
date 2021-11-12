@@ -42,8 +42,8 @@ public final class Constants {
         public static double kD = 0;
         public static double kF = 0; //! (%ofMotor x 1023) / maxNativeVelocity
         
-        public static double shootOpenRampRate = 0.5;
-        public static double shootCloseRampRate = 0.5;
+        public static double shootOpenRampRate = 0.1;
+        public static double shootCloseRampRate = 0.1;
 
         public static double oneFullRotation = 1023;
         public static double maxNativeVelocity = 2084; //TODO make sure this is right for talon fx

@@ -6,6 +6,7 @@ package frc.robot;
 
 /** Add your docs here. */
 public class XYPlane {
+    //!not needed, only needed for swerve drive (not need for now, at least)
     private double x;
     private double y;
     public static XYPlane getInstance()
