@@ -11,9 +11,9 @@ public final class Constants {
 
     public static class DRIVE
     {
-        public static int leftMasterCANID = 2;
+        public static int leftMasterCANID = 10;
         public static int rightMasterCANID = 0;
-        public static int leftMinionCANID = 10;
+        public static int leftMinionCANID = 2;
         public static int rightMinionCANID = 9;
 
         public static double kWheelDiameterInches = 5.9575;
