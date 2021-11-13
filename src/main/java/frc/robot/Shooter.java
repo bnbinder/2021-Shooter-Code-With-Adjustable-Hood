@@ -32,6 +32,9 @@ public class Shooter {
         ShootRight.configFactoryDefault();
         ShootHood.configFactoryDefault();
 
+        
+        ShootLeft.follow(ShootRight);
+
     
         ShootHood.setNeutralMode(NeutralMode.Coast);
         ShootRight.setNeutralMode(NeutralMode.Coast);
@@ -47,34 +50,6 @@ public class Shooter {
         ShootRight.config_kD(0, SHOOT.kD);
         ShootRight.config_kF(0, SHOOT.kF);
         
-    }
-    
-    public static Shooter getInstance()
-    {
-        return InstanceHolder.mInstance;
-    }
-
-    public void updateShoot()
-    {
-        ShootLeft.setInverted(true);
-
-        leftShootPosNative = ShootLeft.getSelectedSensorPosition();
-        rightShootPosNative = ShootRight.getSelectedSensorPosition();
-        averageShootNativeDistance = (leftShootPosNative + rightShootPosNative) / 2.0;
-
-        leftShootPosInch = MkUtil.nativeToInches(leftShootPosNative);
-        rightShootPosInch = MkUtil.nativeToInches(rightShootPosNative);
-        averageShootInchesDistance = (leftShootPosInch + rightShootPosInch) / 2.0;
-
-        leftShootVelNative = ShootLeft.getSelectedSensorVelocity();
-        rightShootVelNative = ShootRight.getSelectedSensorVelocity();
-        averageShootNativePer100ms = (leftShootVelNative + rightShootVelNative) / 2.0;
-
-        leftShootVelInch = MkUtil.nativePer100MstoInchesPerSec(leftShootVelNative);
-        rightShootVelInch = MkUtil.nativePer100MstoInchesPerSec(rightShootVelNative);
-        averageShootInchesPerSec = (leftShootVelInch + rightShootVelInch) / 2.0;
-
-
         ShootLeft.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
         ShootLeft.configVelocityMeasurementWindow(32);
 
@@ -146,6 +121,34 @@ public class Shooter {
         ShootRight.configNeutralDeadband(0.001); 
         ShootHood.configNeutralDeadband(0.001); 
         //this too
+    }
+    
+    public static Shooter getInstance()
+    {
+        return InstanceHolder.mInstance;
+    }
+
+    public void updateShoot()
+    {
+        ShootLeft.setInverted(true);
+
+        leftShootPosNative = ShootLeft.getSelectedSensorPosition();
+        rightShootPosNative = ShootRight.getSelectedSensorPosition();
+        averageShootNativeDistance = (leftShootPosNative + rightShootPosNative) / 2.0;
+
+        leftShootPosInch = MkUtil.nativeToInches(leftShootPosNative);
+        rightShootPosInch = MkUtil.nativeToInches(rightShootPosNative);
+        averageShootInchesDistance = (leftShootPosInch + rightShootPosInch) / 2.0;
+
+        leftShootVelNative = ShootLeft.getSelectedSensorVelocity();
+        rightShootVelNative = ShootRight.getSelectedSensorVelocity();
+        averageShootNativePer100ms = (leftShootVelNative + rightShootVelNative) / 2.0;
+
+        leftShootVelInch = MkUtil.nativePer100MstoInchesPerSec(leftShootVelNative);
+        rightShootVelInch = MkUtil.nativePer100MstoInchesPerSec(rightShootVelNative);
+        averageShootInchesPerSec = (leftShootVelInch + rightShootVelInch) / 2.0;
+
+
     }
 
     public void shootPercent(double shootR, double shootL)

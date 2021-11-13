@@ -3,43 +3,37 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Drive;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-public class DriveStraight extends Command {
-  private double dist;
-  public DriveStraight(double distance) {
-    dist = distance;
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class DriveStraight extends CommandBase {
+  /** Creates a new DriveStraight. */
+  private double distance;
+  public DriveStraight(double dist) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    distance = dist;
   }
 
-  // Called just before this Command runs the first time
+  // Called when the command is initially scheduled.
   @Override
-  protected void initialize() {
-    Drive.getInstance().setMagic(dist);
+  public void initialize() {
+    Drive.getInstance().setMagic(distance);
   }
 
-  // Called repeatedly when this Command is scheduled to run
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  protected void execute() {
+  public void execute() {
     Drive.getInstance().motionMagical();
   }
 
-  // Make this return true when this Command no longer needs to run execute()
+  // Called once the command ends or is interrupted.
   @Override
-  protected boolean isFinished() {
+  public void end(boolean interrupted) {}
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
     return Drive.getInstance().isMotionDone();
   }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {}
 }

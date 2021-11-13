@@ -45,6 +45,9 @@ public class Drive {
         rightMinion.configFactoryDefault();
         leftMinion.configFactoryDefault();
     
+        leftMinion.follow(leftMaster);
+        rightMinion.follow(rightMaster);
+
         leftMaster.setNeutralMode(NeutralMode.Coast);
         rightMaster.setNeutralMode(NeutralMode.Coast);
         leftMinion.setNeutralMode(NeutralMode.Coast);
@@ -59,6 +62,106 @@ public class Drive {
         rightMaster.config_kI(0, DRIVE.kI);
         rightMaster.config_kD(0, DRIVE.kD);
         rightMaster.config_kF(0, DRIVE.kF);
+
+        
+        leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        leftMaster.configVelocityMeasurementWindow(32);
+
+        leftMinion.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        leftMinion.configVelocityMeasurementWindow(32);
+
+        rightMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        rightMaster.configVelocityMeasurementWindow(32);
+
+        rightMinion.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        rightMinion.configVelocityMeasurementWindow(32);
+
+
+
+        leftMaster.enableVoltageCompensation(true);
+        leftMaster.configVoltageCompSaturation(12);
+
+        leftMinion.enableVoltageCompensation(true);
+        leftMinion.configVoltageCompSaturation(12);
+
+        rightMaster.enableVoltageCompensation(true);
+        rightMaster.configVoltageCompSaturation(12);
+
+        rightMinion.enableVoltageCompensation(true);
+        rightMinion.configVoltageCompSaturation(12);
+
+
+
+        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+        leftMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        leftMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+        rightMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
+        rightMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
+
+
+
+        leftMaster.configPeakOutputForward(1);
+        leftMaster.configPeakOutputReverse(.80);
+
+        leftMinion.configPeakOutputForward(1);
+        leftMinion.configPeakOutputReverse(.80);
+
+        rightMaster.configPeakOutputForward(1);
+        rightMaster.configPeakOutputReverse(.80);
+
+        rightMinion.configPeakOutputForward(1);
+        rightMinion.configPeakOutputReverse(.80);
+
+
+
+        leftMaster.configClosedLoopPeakOutput(0, 1);
+        leftMinion.configClosedLoopPeakOutput(0, 1);
+        rightMaster.configClosedLoopPeakOutput(0, 1);
+        rightMinion.configClosedLoopPeakOutput(0, 1);
+
+
+
+        leftMaster.configOpenloopRamp(DRIVE.driveOpenRampRate);
+        leftMinion.configOpenloopRamp(DRIVE.driveOpenRampRate);
+        rightMaster.configOpenloopRamp(DRIVE.driveOpenRampRate);
+        rightMinion.configOpenloopRamp(DRIVE.driveOpenRampRate);
+
+
+
+        leftMaster.configClosedloopRamp(DRIVE.driveCloseRampRate);
+        leftMinion.configClosedloopRamp(DRIVE.driveCloseRampRate);
+        rightMaster.configClosedloopRamp(DRIVE.driveCloseRampRate);
+        rightMinion.configClosedloopRamp(DRIVE.driveCloseRampRate);
+
+
+        leftMaster.configMotionSCurveStrength(6);
+        leftMinion.configMotionSCurveStrength(6);
+        rightMaster.configMotionSCurveStrength(6);
+        rightMinion.configMotionSCurveStrength(6);
+        //swerd code said 6, so 6 it is
+
+
+        leftMaster.configAllowableClosedloopError(0, 1);
+        leftMinion.configAllowableClosedloopError(0, 1);
+        rightMaster.configAllowableClosedloopError(0, 1);
+        rightMinion.configAllowableClosedloopError(0, 1);
+        //this too, since sensor units are super big, so 1 is small i guess
+    
+    
+        leftMaster.configNeutralDeadband(0.001); 
+        leftMinion.configNeutralDeadband(0.001); 
+        rightMaster.configNeutralDeadband(0.001); 
+        rightMinion.configNeutralDeadband(0.001); 
+        //these are useless, but since in the swerd code, he is god so he knows best
+
+
+
 
         //gets velocity in past 10ms when determining what velocity to have (motion magic)
         //?     test and add later
@@ -191,104 +294,6 @@ public class Drive {
         rightVelInch = MkUtil.nativePer100MstoInchesPerSec(rightVelNative);
         averageInchesPerSec = (leftVelInch + rightVelInch) / 2.0;
 
-
-
-        leftMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
-        leftMaster.configVelocityMeasurementWindow(32);
-
-        leftMinion.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
-        leftMinion.configVelocityMeasurementWindow(32);
-
-        rightMaster.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
-        rightMaster.configVelocityMeasurementWindow(32);
-
-        rightMinion.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
-        rightMinion.configVelocityMeasurementWindow(32);
-
-
-
-        leftMaster.enableVoltageCompensation(true);
-        leftMaster.configVoltageCompSaturation(12);
-
-        leftMinion.enableVoltageCompensation(true);
-        leftMinion.configVoltageCompSaturation(12);
-
-        rightMaster.enableVoltageCompensation(true);
-        rightMaster.configVoltageCompSaturation(12);
-
-        rightMinion.enableVoltageCompensation(true);
-        rightMinion.configVoltageCompSaturation(12);
-
-
-
-        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
-        leftMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
-
-        leftMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
-        leftMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
-
-        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
-        rightMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
-
-        rightMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 20);
-        rightMinion.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 20);
-
-
-
-        leftMaster.configPeakOutputForward(1);
-        leftMaster.configPeakOutputReverse(.80);
-
-        leftMinion.configPeakOutputForward(1);
-        leftMinion.configPeakOutputReverse(.80);
-
-        rightMaster.configPeakOutputForward(1);
-        rightMaster.configPeakOutputReverse(.80);
-
-        rightMinion.configPeakOutputForward(1);
-        rightMinion.configPeakOutputReverse(.80);
-
-
-
-        leftMaster.configClosedLoopPeakOutput(0, 1);
-        leftMinion.configClosedLoopPeakOutput(0, 1);
-        rightMaster.configClosedLoopPeakOutput(0, 1);
-        rightMinion.configClosedLoopPeakOutput(0, 1);
-
-
-
-        leftMaster.configOpenloopRamp(DRIVE.driveOpenRampRate);
-        leftMinion.configOpenloopRamp(DRIVE.driveOpenRampRate);
-        rightMaster.configOpenloopRamp(DRIVE.driveOpenRampRate);
-        rightMinion.configOpenloopRamp(DRIVE.driveOpenRampRate);
-
-
-
-        leftMaster.configClosedloopRamp(DRIVE.driveCloseRampRate);
-        leftMinion.configClosedloopRamp(DRIVE.driveCloseRampRate);
-        rightMaster.configClosedloopRamp(DRIVE.driveCloseRampRate);
-        rightMinion.configClosedloopRamp(DRIVE.driveCloseRampRate);
-
-
-        leftMaster.configMotionSCurveStrength(6);
-        leftMinion.configMotionSCurveStrength(6);
-        rightMaster.configMotionSCurveStrength(6);
-        rightMinion.configMotionSCurveStrength(6);
-        //swerd code said 6, so 6 it is
-
-
-        leftMaster.configAllowableClosedloopError(0, 1);
-        leftMinion.configAllowableClosedloopError(0, 1);
-        rightMaster.configAllowableClosedloopError(0, 1);
-        rightMinion.configAllowableClosedloopError(0, 1);
-        //this too, since sensor units are super big, so 1 is small i guess
-    
-    
-        leftMaster.configNeutralDeadband(0.001); 
-        leftMinion.configNeutralDeadband(0.001); 
-        rightMaster.configNeutralDeadband(0.001); 
-        rightMinion.configNeutralDeadband(0.001); 
-        //these are useless, but since in the swerd code, he is god so he knows best
-
     
         odometry.update(navX.getRotation2d(), leftMaster.getSelectedSensorPosition(), rightMaster.getSelectedSensorPosition());
     }
@@ -318,6 +323,10 @@ public class Drive {
     {
         return Math.abs(distance - averageInchesDistance) < 0.5 && averageInchesPerSec < 0.1;
     }
+
+
+    
+
 
     public void resetStuff()
     {
