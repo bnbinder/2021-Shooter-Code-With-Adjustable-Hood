@@ -48,9 +48,19 @@ public class Shooter {
 
         ShootLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         ShootRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        ShootHood.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-    
-        ShootHood.setNeutralMode(NeutralMode.Coast);
+        ShootRight.config_kP(0, SHOOT.kP);
+        ShootRight.config_kI(0, SHOOT.kI);
+        ShootRight.config_kD(0, SHOOT.kD);
+        ShootRight.config_kF(0, SHOOT.kF);
+
+        ShootLeft.config_kP(0, SHOOT.kP);
+        ShootLeft.config_kI(0, SHOOT.kI);
+        ShootLeft.config_kD(0, SHOOT.kD);
+        ShootLeft.config_kF(0, SHOOT.kF);
+
+        ShootHood.setNeutralMode(NeutralMode.Brake);
         ShootRight.setNeutralMode(NeutralMode.Coast);
         ShootLeft.setNeutralMode(NeutralMode.Coast);
                 
@@ -60,6 +70,8 @@ public class Shooter {
         ShootRight.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
         ShootRight.configVelocityMeasurementWindow(32);
 
+        ShootHood.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms);
+        ShootHood.configVelocityMeasurementWindow(32);
 
 
         ShootLeft.enableVoltageCompensation(true);
@@ -104,14 +116,16 @@ public class Shooter {
 
         ShootLeft.configOpenloopRamp(SHOOT.shootOpenRampRate);
         ShootRight.configOpenloopRamp(SHOOT.shootOpenRampRate);
+        ShootHood.configOpenloopRamp(SHOOT.shootHoodOpenRamp);
 
 
         ShootLeft.configClosedloopRamp(SHOOT.shootCloseRampRate);
         ShootRight.configClosedloopRamp(SHOOT.shootCloseRampRate);
+        ShootHood.configClosedloopRamp(SHOOT.shootHoodCloseRamp);
 
-
-        ShootLeft.configMotionSCurveStrength(6);
-        ShootRight.configMotionSCurveStrength(6);
+        ShootLeft.configMotionSCurveStrength(1);
+        ShootRight.configMotionSCurveStrength(1);
+        ShootHood.configMotionSCurveStrength(1);
         //swerd code said 6, so 6 it is
 
 

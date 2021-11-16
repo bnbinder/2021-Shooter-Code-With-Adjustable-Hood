@@ -48,6 +48,8 @@ public final class Constants {
         
         public static double shootOpenRampRate = 0.1;
         public static double shootCloseRampRate = 0.1;
+        public static double shootHoodOpenRamp = 0.1;
+        public static double shootHoodCloseRamp = 0.1;
 
         public static double oneFullRotation = 1023;
         public static double maxNativeVelocity = 2084; //TODO make sure this is right for talon fx
