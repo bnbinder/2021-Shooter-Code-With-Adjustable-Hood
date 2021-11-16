@@ -258,11 +258,15 @@ public class Drive {
         rightMaster.setInverted(true);
         rightMinion.setInverted(true);
         //see shit and stuff
+        
+        /*
         SmartDashboard.putNumber("busVoltage", leftMaster.getBusVoltage());
         SmartDashboard.putNumber("output%", leftMaster.getMotorOutputPercent());
         SmartDashboard.putNumber("outputVoltage", leftMaster.getMotorOutputVoltage());
+        */
         SmartDashboard.putNumber("sensorPos", leftMaster.getSelectedSensorPosition());
         SmartDashboard.putNumber("sensorVelocity", leftMaster.getSelectedSensorVelocity());
+        /*
         SmartDashboard.putNumber("statorCurrent", leftMaster.getStatorCurrent());
         SmartDashboard.putNumber("supplyCurrent", leftMaster.getSupplyCurrent());
         SmartDashboard.putNumber("temp", leftMaster.getTemperature());
@@ -270,11 +274,14 @@ public class Drive {
         SmartDashboard.putNumber("rbusVoltage", rightMaster.getBusVoltage());
         SmartDashboard.putNumber("routput%", rightMaster.getMotorOutputPercent());
         SmartDashboard.putNumber("routputVoltage", rightMaster.getMotorOutputVoltage());
+        */
         SmartDashboard.putNumber("rsensorPos", rightMaster.getSelectedSensorPosition());
         SmartDashboard.putNumber("rsensorVelocity", rightMaster.getSelectedSensorVelocity());
+        /*
         SmartDashboard.putNumber("rstatorCurrent", rightMaster.getStatorCurrent());
         SmartDashboard.putNumber("rsupplyCurrent", rightMaster.getSupplyCurrent());
         SmartDashboard.putNumber("rtemp", rightMaster.getTemperature());
+        */
 
         SmartDashboard.putNumber("odometryY", MkUtil.nativePer100MstoInchesPerSec(odometry.getPoseMeters().getY()));
         SmartDashboard.putNumber("odometryX", MkUtil.nativePer100MstoInchesPerSec(odometry.getPoseMeters().getY()));

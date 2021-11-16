@@ -173,6 +173,9 @@ public class Shooter {
         leftShootVelInch = MkUtil.nativePer100MstoInchesPerSec(leftShootVelNative);
         rightShootVelInch = MkUtil.nativePer100MstoInchesPerSec(rightShootVelNative);
         averageShootInchesPerSec = (leftShootVelInch + rightShootVelInch) / 2.0;
+
+        SmartDashboard.putNumber("bobs burgers bobs burgers", shootCalculateShit(4000));
+        
     }
 
     public void shootPercent(double shoot)
@@ -191,6 +194,19 @@ public class Shooter {
     {
         pos = MkUtil.limit(pos, 100, 6400);
         ShootHood.set(ControlMode.Position, pos);
+    }
+
+
+
+    public double getHoodSensorPos()
+    {
+        return ShootHood.getSelectedSensorPosition();
+    }
+
+
+    public double shootCalculateShit(double goal)
+    {
+        return shootPID.calculate(getHoodSensorPos(), new TrapezoidProfile.State(0, 0), constraints);
     }
     
     private static class InstanceHolder
