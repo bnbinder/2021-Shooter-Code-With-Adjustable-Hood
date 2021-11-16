@@ -34,7 +34,7 @@ public class Shooter {
                    averageShootNativePer100ms, averageShootInchesPerSec;
 
     private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(SHOOT.hoodMaxVel, SHOOT.hoodMaxAccel);
-    private ProfiledPIDController shootPID = new ProfiledPIDController(SHOOT.kP, SHOOT.kI, SHOOT.kD, constraints);
+    private ProfiledPIDController shootPID = new ProfiledPIDController(SHOOT.hoodKP, SHOOT.hoodKI, SHOOT.hoodKD, constraints);
 
 
     private Shooter()
@@ -206,7 +206,8 @@ public class Shooter {
 
     public double shootCalculateShit(double goal)
     {
-        return shootPID.calculate(getHoodSensorPos(), new TrapezoidProfile.State(0, 0), constraints);
+        goal = MkUtil.limit(goal, 100, 6400);
+        return shootPID.calculate(getHoodSensorPos(), new TrapezoidProfile.State(goal, 0), constraints);
     }
     
     private static class InstanceHolder
