@@ -78,11 +78,15 @@ public class Robot extends TimedRobot {
 
     if(xbox.getRawAxis(1) > 0)
     {
-      mShoot.shootPercent(xbox.getRawAxis(1), xbox.getRawAxis(1));
+      mShoot.shootPercent(xbox.getRawAxis(1));
+    }
+    else if(xbox.getAButton())
+    {
+      mShoot.ShootHoodPosition(100);
     }
     else
     {
-      mShoot.shootPercent(0,0);
+      mShoot.shootPercent(0);
     }
 
 
