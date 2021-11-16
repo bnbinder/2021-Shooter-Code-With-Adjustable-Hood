@@ -207,7 +207,7 @@ public class Shooter {
     public double shootCalculateShit(double goal)
     {
         goal = MkUtil.limit(goal, 100, 6400);
-        return shootPID.calculate(getHoodSensorPos(), new TrapezoidProfile.State(goal, 0), constraints);
+        return shootPID.calculate(getHoodSensorPos(), goal);
     }
     
     private static class InstanceHolder
