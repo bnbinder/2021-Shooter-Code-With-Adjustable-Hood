@@ -9,6 +9,7 @@ import java.util.ResourceBundle.Control;
 import javax.management.remote.rmi.RMIIIOPServerImpl;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
@@ -44,6 +45,11 @@ public class Drive {
         rightMaster.configFactoryDefault();
         rightMinion.configFactoryDefault();
         leftMinion.configFactoryDefault();
+
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        leftMinion.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        rightMinion.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     
         leftMinion.follow(leftMaster);
         rightMinion.follow(rightMaster);

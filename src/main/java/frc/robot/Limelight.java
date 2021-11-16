@@ -21,6 +21,7 @@ public class Limelight {
     private NetworkTableEntry pipeline = table.getEntry("pipeline");
     private TrapezoidProfile.Constraints constraint = new TrapezoidProfile.Constraints();
     private PIDController shootController = new PIDController(SHOOT.kP, SHOOT.kI, SHOOT.kD);
+    private Drive mDrive = Drive.getInstance();
 
     private Limelight()
     {
@@ -29,6 +30,11 @@ public class Limelight {
 
     public void updateAutoShoot()
     {
-        shootController.
+
+    }
+
+    public double distance(double yError, double angleOfHood, double heightAboveRob)
+    {
+        return 1;
     }
 }

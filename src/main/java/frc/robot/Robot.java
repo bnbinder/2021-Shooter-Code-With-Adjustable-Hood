@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Drive;
-import frc.robot.commands.DriveStraight;
+import frc.robot.commands.DriveStr8;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -30,6 +31,8 @@ public class Robot extends TimedRobot {
   private Timer LeTimer = new Timer();
   private Timer endTime = new Timer();
 
+  private Command autoCommand;
+
   private XboxController xbox = new XboxController(0);
 
   @Override
@@ -40,12 +43,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-
+    autoCommand = new DriveStr8();
+    autoCommand.schedule();
   }
 
   @Override
   public void autonomousPeriodic() {
-    
+    updateSensors();
   }
 
   @Override
@@ -87,8 +91,7 @@ public class Robot extends TimedRobot {
     {
      // mDrive.motionMagical();
     }
-    mDrive.updateDrive();
-    mShoot.updateShoot();
+    updateSensors();
     SmartDashboard.putBoolean("abut", xbox.getAButton());
     SmartDashboard.putNumber("time", LeTimer.get());
     
@@ -117,4 +120,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {}
+
+  public void updateSensors()
+  {
+    mDrive.updateDrive();
+    mShoot.updateShoot();
+  }
 }

@@ -7,11 +7,14 @@ package frc.robot;
 import frc.robot.Constants.SHOOT;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.fasterxml.jackson.databind.util.ArrayBuilders.ShortBuilder;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** Add your docs here. */
 public class Shooter {
@@ -28,12 +31,16 @@ public class Shooter {
 
     private Shooter()
     {
+            //TODO have two pids one for hood and one for shoot
         ShootLeft.configFactoryDefault();
         ShootRight.configFactoryDefault();
         ShootHood.configFactoryDefault();
 
         
         ShootLeft.follow(ShootRight);
+
+        ShootLeft.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        ShootRight.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
     
         ShootHood.setNeutralMode(NeutralMode.Coast);
@@ -130,6 +137,9 @@ public class Shooter {
 
     public void updateShoot()
     {
+        SmartDashboard.putNumber("leftshootsensor", ShootLeft.getSelectedSensorPosition());
+        SmartDashboard.putNumber("rightshootsensor", ShootRight.getSelectedSensorPosition());
+        SmartDashboard.putNumber("hoodsensor", ShootHood.getSelectedSensorPosition());
         ShootLeft.setInverted(true);
 
         leftShootPosNative = ShootLeft.getSelectedSensorPosition();
@@ -162,7 +172,7 @@ public class Shooter {
         ShootLeft.set(ControlMode.Velocity, vel);
     }
 
-    public void shootPos(double pos)
+    public void shootSelectedPos(double pos)
     {
         ShootHood.setSelectedSensorPosition(pos);
     }
