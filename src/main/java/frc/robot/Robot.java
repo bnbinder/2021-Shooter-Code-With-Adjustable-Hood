@@ -57,6 +57,8 @@ public class Robot extends TimedRobot {
     //mDrive.setMagic(12);
     LeTimer.start();
     mDrive.resetOdo();
+    mShoot.setHoodPos(0);
+    mShoot.resetPID();
   }
 
   @Override
@@ -82,7 +84,11 @@ public class Robot extends TimedRobot {
     }
     else if(xbox.getAButton())
     {
-      mShoot.ShootHoodPosition(100);
+      //mShoot.ShootHoodPosition(100);
+    }
+    else if(xbox.getBButton())
+    {
+      //mShoot.shootHoodPercent(mShoot.shootCalculateShit(200));
     }
     else
     {

@@ -81,7 +81,7 @@ public class Shooter {
         ShootRight.configVoltageCompSaturation(12);
 
         ShootHood.enableVoltageCompensation(true);
-        ShootHood.configVoltageCompSaturation(12);
+        ShootHood.configVoltageCompSaturation(3);
 
 
 
@@ -184,6 +184,11 @@ public class Shooter {
         ShootRight.set(ControlMode.PercentOutput, shoot);
     }
 
+    public void shootHoodPercent(double shoot)
+    {
+        ShootHood.set(ControlMode.PercentOutput, shoot);
+    }
+
     public void shootVelocity(double vel)
     {
         ShootLeft.set(ControlMode.Velocity, vel);
@@ -196,11 +201,22 @@ public class Shooter {
         ShootHood.set(ControlMode.Position, pos);
     }
 
+    public void setHoodPos(double pos)
+    {
+        ShootHood.setSelectedSensorPosition(pos);
+    }
+
 
 
     public double getHoodSensorPos()
     {
         return ShootHood.getSelectedSensorPosition();
+    }
+
+    public void resetPID()
+    {
+        shootPID.reset(0, 0);
+        shootPID.setGoal(0);
     }
 
 
