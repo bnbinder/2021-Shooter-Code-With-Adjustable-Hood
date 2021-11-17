@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
     LeTimer.start();
     mDrive.resetOdo();
     mShoot.setHoodPos(0);
+    XYPlane.getInstance().resetShit();
     mShoot.resetPID();
   }
 
@@ -80,19 +81,27 @@ public class Robot extends TimedRobot {
 
     if(xbox.getRawAxis(1) > 0)
     {
-      mShoot.shootPercent(xbox.getRawAxis(1));
+      //mShoot.shootPercent(xbox.getRawAxis(1));
     }
     else if(xbox.getAButton())
     {
       //mShoot.ShootHoodPosition(100);
+      XYPlane.getInstance().changeFuckingSensor();
     }
     else if(xbox.getBButton())
     {
-      //mShoot.shootHoodPercent(mShoot.shootCalculateShit(200));
+      double var = mShoot.shootCalculateShit(3000);
+      if(var > .1)
+      {
+        var = 0.1;
+      }
+      mShoot.shootHoodPercent(var);
+      XYPlane.getInstance().changebastatrsSensro();
     }
     else
     {
       mShoot.shootPercent(0);
+      mShoot.shootHoodPercent(0);
     }
 
 
@@ -101,7 +110,10 @@ public class Robot extends TimedRobot {
     {
      // mDrive.motionMagical();
     }
+    SmartDashboard.putNumber("ijfhrughhgjrhbgrbihjdijdb", mShoot.shootCalculateShit(3000));
     updateSensors();
+    XYPlane.getInstance().fuck();
+    XYPlane.getInstance().PIDset(XYPlane.getInstance().fuckyou());
     SmartDashboard.putBoolean("abut", xbox.getAButton());
     SmartDashboard.putNumber("time", LeTimer.get());
     

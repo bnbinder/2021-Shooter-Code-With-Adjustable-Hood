@@ -54,12 +54,12 @@ public final class Constants {
         public static double oneFullRotation = 1023;
         public static double maxNativeVelocity = 2084; //TODO make sure this is right for talon fx
 
-        public static double hoodMaxVel = 20; //TODO get these
-        public static double hoodMaxAccel = 20;
+        public static double hoodMaxVel = 5; //TODO get these
+        public static double hoodMaxAccel = 0;
 
-        public static double hoodKP = 0.1;
+        public static double hoodKP = 0.00010;
         public static double hoodKI = 0;
-        public static double hoodKD = 0;
+        public static double hoodKD = 0; //0.000000017;
         public static double hoodKF = 0;
     }
 }

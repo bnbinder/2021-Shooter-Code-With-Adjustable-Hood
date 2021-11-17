@@ -83,7 +83,6 @@ public class Drive {
         rightMinion.configVelocityMeasurementWindow(32);
 
 
-
         leftMaster.enableVoltageCompensation(true);
         leftMaster.configVoltageCompSaturation(12);
 

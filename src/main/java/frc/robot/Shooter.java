@@ -81,7 +81,7 @@ public class Shooter {
         ShootRight.configVoltageCompSaturation(12);
 
         ShootHood.enableVoltageCompensation(true);
-        ShootHood.configVoltageCompSaturation(3);
+        ShootHood.configVoltageCompSaturation(12);
 
 
 
@@ -103,14 +103,14 @@ public class Shooter {
         ShootRight.configPeakOutputForward(1);
         ShootRight.configPeakOutputReverse(.4);
 
-        ShootHood.configPeakOutputForward(.3);
-        ShootHood.configPeakOutputReverse(.3);
+        //ShootHood.configPeakOutputForward(.3);
+        //ShootHood.configPeakOutputReverse(-.3);
 
 
 
         ShootLeft.configClosedLoopPeakOutput(0, 1);
         ShootRight.configClosedLoopPeakOutput(0, 1);
-        ShootHood.configClosedLoopPeakOutput(0, 0.3);
+        //ShootHood.configClosedLoopPeakOutput(0, 0.05);
 
 
 
@@ -121,11 +121,11 @@ public class Shooter {
 
         ShootLeft.configClosedloopRamp(SHOOT.shootCloseRampRate);
         ShootRight.configClosedloopRamp(SHOOT.shootCloseRampRate);
-        ShootHood.configClosedloopRamp(SHOOT.shootHoodCloseRamp);
+        //ShootHood.configClosedloopRamp(SHOOT.shootHoodCloseRamp);
 
         ShootLeft.configMotionSCurveStrength(1);
         ShootRight.configMotionSCurveStrength(1);
-        ShootHood.configMotionSCurveStrength(1);
+        //ShootHood.configMotionSCurveStrength(1);
         //swerd code said 6, so 6 it is
 
 
@@ -174,7 +174,7 @@ public class Shooter {
         rightShootVelInch = MkUtil.nativePer100MstoInchesPerSec(rightShootVelNative);
         averageShootInchesPerSec = (leftShootVelInch + rightShootVelInch) / 2.0;
 
-        SmartDashboard.putNumber("bobs burgers bobs burgers", shootCalculateShit(4000));
+       // SmartDashboard.putNumber("bobs burgers bobs burgers", shootCalculateShit(4000));
         
     }
 
@@ -198,7 +198,7 @@ public class Shooter {
     public void ShootHoodPosition(double pos)
     {
         pos = MkUtil.limit(pos, 100, 6400);
-        ShootHood.set(ControlMode.Position, pos);
+        //ShootHood.set(ControlMode.Position, pos);
     }
 
     public void setHoodPos(double pos)
