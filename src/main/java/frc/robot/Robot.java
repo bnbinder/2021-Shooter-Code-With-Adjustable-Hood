@@ -28,6 +28,11 @@ public class Robot extends TimedRobot {
   private Drive mDrive = Drive.getInstance();
   private Shooter mShoot = Shooter.getInstance();
 
+  private double leftOut;
+  private double rightOut;
+  private double leftTurn;
+  private double rightTurn;
+
   private double var;
 
   private Timer LeTimer = new Timer();
@@ -67,18 +72,24 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() 
   {
-    if(xbox.getRawAxis(2) > 0)
+
+    leftTurn = xbox.getRawAxis(0);
+    rightTurn = -xbox.getRawAxis(0);
+    turnTotal;
+
+    leftOut = xbox.getRawAxis(2) - xbox.getRawAxis(3);
+    rightOut = xbox.getRawAxis(2) - xbox.getRawAxis(3);
+
+
+    if(Math.abs(leftOut) > 0)
     {
-      mDrive.setDrivePercent(xbox.getRawAxis(2), xbox.getRawAxis(2));
+      if()
+      mDrive.setDrivePercent(leftTurn, rightTurn);
     }
-    else if(xbox.getRawAxis(3) > 0)
-    {
-      mDrive.setDrivePercent(-xbox.getRawAxis(3), -xbox.getRawAxis(3));
-    }
-    else
-    {
-      mDrive.setDrivePercent(0, 0);
-    }
+
+    //leftOut = -xbox.getRawAxis(3);
+    //rightOut = -xbox.getRawAxis(3);
+    //mDrive.setDrivePercent(leftOut, rightOut);
 
 
     if(xbox.getRawAxis(1) > 0)
