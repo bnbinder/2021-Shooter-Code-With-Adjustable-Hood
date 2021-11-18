@@ -57,9 +57,11 @@ public final class Constants {
         public static double hoodMaxVel = 5; //TODO get these
         public static double hoodMaxAccel = 0;
 
-        public static double hoodKP = 0.00010;
-        public static double hoodKI = 0;
-        public static double hoodKD = 0; //0.000000017;
+        //TODO dont change P unless
+        //TODO increase D slowly 
+        public static double hoodKP = 0.00005; //0.00010;
+        public static double hoodKI = 0; //0.000000005;
+        public static double hoodKD = 0.0000001; //0.000000017;
         public static double hoodKF = 0;
     }
 }

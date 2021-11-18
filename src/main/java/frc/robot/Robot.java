@@ -87,12 +87,16 @@ public class Robot extends TimedRobot {
     }
     else if(xbox.getAButton())
     {
-      //mShoot.ShootHoodPosition(100);
-      //XYPlane.getInstance().changeFuckingSensor();
+      var = mShoot.shootCalculateShit(4000);
+      if(var > .15)
+      {
+        var = 0.15;
+      }
+      mShoot.shootHoodPercent(var);
     }
     else if(xbox.getBButton())
     {
-      var = mShoot.shootCalculateShit(3000);
+      var = mShoot.shootCalculateShit(2000);
       if(var > .15)
       {
         var = 0.15;
@@ -113,6 +117,7 @@ public class Robot extends TimedRobot {
      // mDrive.motionMagical();
     }
     SmartDashboard.putNumber("ijfhrughhgjrhbgrbihjdijdb", mShoot.shootCalculateShit(3000));
+    SmartDashboard.putNumber("thechjeetos bonless wings", mShoot.shootCalculateShit(4000));
     SmartDashboard.putNumber("var", var);
     updateSensors();
     //XYPlane.getInstance().fuck();
