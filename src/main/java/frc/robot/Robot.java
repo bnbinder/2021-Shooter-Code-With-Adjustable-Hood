@@ -73,19 +73,23 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() 
   {
 
-    leftTurn = xbox.getRawAxis(0);
-    rightTurn = -xbox.getRawAxis(0);
-    turnTotal;
+    if(Math.abs(xbox.getRawAxis(0)) > 0.1)
+    {
+      leftTurn = 0;//xbox.getRawAxis(0);
+      rightTurn = 0;//xbox.getRawAxis(0); //TODO find out what stick controls turn
+    }
+    else
+    {
+      leftTurn = 0;
+      rightTurn = 0;
+    }
 
     leftOut = xbox.getRawAxis(2) - xbox.getRawAxis(3);
     rightOut = xbox.getRawAxis(2) - xbox.getRawAxis(3);
 
 
-    if(Math.abs(leftOut) > 0)
-    {
-      if()
-      mDrive.setDrivePercent(leftTurn, rightTurn);
-    }
+    
+    mDrive.setDrivePercent(leftOut + (leftTurn/2), rightOut - (rightTurn/2));
 
     //leftOut = -xbox.getRawAxis(3);
     //rightOut = -xbox.getRawAxis(3);
