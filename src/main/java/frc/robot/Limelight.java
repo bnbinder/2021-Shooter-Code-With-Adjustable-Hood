@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import frc.robot.Constants.SHOOT;
+import frc.robot.Constants.VISION;
 
 /** Add your docs here. */
 public class Limelight {
@@ -22,6 +23,9 @@ public class Limelight {
     private TrapezoidProfile.Constraints constraint = new TrapezoidProfile.Constraints();
     private PIDController shootController = new PIDController(SHOOT.kP, SHOOT.kI, SHOOT.kD);
     private Drive mDrive = Drive.getInstance();
+    private Shooter mShoot = Shooter.getInstance();
+    private double complementAngy;
+    private double horizonTX, verticTY, distance, hoodPos;
 
     private Limelight()
     {
@@ -30,11 +34,24 @@ public class Limelight {
 
     public void updateAutoShoot()
     {
-
+        horizonTX = horizonAngle.getDouble(0.0);
+        verticTY = verticAngle.getDouble(0.0);
+        distance = getDistance();
     }
 
-    public double distance(double yError, double angleOfHood, double heightAboveRob)
+    public void autoHood()
     {
-        return 1;
+        hoodPos = distance * VISION.BindersConstant;
+    }
+
+
+    public double getDistance()
+    {
+        // d = distance, h2 = height of goal, h1 = heihgt of camera, a1 = angle from robot to camera, a2 = angle from camera to target / error
+        //d = (h2-h1) / tan(a1+a2)
+        //TODO i hope ty gives us right angle, also need to test the nativeToDegree i created
+        complementAngy = 180 - mShoot.getCameraAngle();
+        return (mShoot.getCameraHeight() - VISION.heightGoal) / 
+                        Math.tan(complementAngy + verticTY);
     }
 }

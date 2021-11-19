@@ -116,4 +116,11 @@ public class MkUtil {
       return "L: " + mLeftMotor + " R: " + mRightMotor;
     }
   }
+
+  //! this is ben binders mkutil extension, above is swerdlow code
+  //i hope this works
+  public static double nativeToDegrees(double gimmeRots, double greerRatio)
+  {
+    return ((gimmeRots * greerRatio) * 360) / 2048;
+  }
 }

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.SHOOT;
+import frc.robot.Constants.VISION;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -206,6 +207,17 @@ public class Shooter {
     public void setHoodPos(double pos)
     {
         ShootHood.setSelectedSensorPosition(pos);
+    }
+
+    public double getCameraHeight()
+    {
+        //TODO find greer ratio and hope this works
+        return Math.sin(getCameraAngle());
+    }
+
+    public double getCameraAngle()
+    {
+        return MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition() + VISION.angleNativeCameraAtRest, 1);
     }
 
 

@@ -64,4 +64,12 @@ public final class Constants {
         public static double hoodKD = 0.0000001; //0.000000017;
         public static double hoodKF = 0;
     }
+
+    public static class VISION
+    {
+        public static double heightGoal = 0;
+        public static double heigtCameraAtRest = 0;
+        public static double angleNativeCameraAtRest = 0;
+        public static double BindersConstant = 0;
+    }
 }
