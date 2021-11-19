@@ -37,11 +37,13 @@ public class Limelight {
         horizonTX = horizonAngle.getDouble(0.0);
         verticTY = verticAngle.getDouble(0.0);
         distance = getDistance();
+        //autohood();
     }
 
     public void autoHood()
     {
-        hoodPos = distance * VISION.BindersConstant;
+        hoodPos = distance * VISION.BindersConstant; //my constant lol
+        //!mShoot.shootHoodPercent(mShoot.shootCalculateShit(hoodPos));
     }
 
 

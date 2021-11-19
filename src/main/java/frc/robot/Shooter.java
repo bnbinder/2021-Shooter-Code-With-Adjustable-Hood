@@ -5,7 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.SHOOT;
+import frc.robot.Drive;
 import frc.robot.Constants.VISION;
+
+import javax.swing.event.MenuDragMouseEvent;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -26,6 +29,9 @@ public class Shooter {
     TalonFX ShootRight = new TalonFX(SHOOT.shootRightCANID);
     TalonFX ShootLeft= new TalonFX(SHOOT.shootLeftCANID);
     TalonFX ShootHood = new TalonFX(SHOOT.shootHoodCANID);
+
+    private Drive mDrive = Drive.getInstance();
+    //private Shooter mShoot = Shooter.getInstance(); im a moron
 
     private double leftShootPosNative, rightShootPosNative, 
                    leftShootPosInch, rightShootPosInch, 
@@ -208,16 +214,39 @@ public class Shooter {
     {
         ShootHood.setSelectedSensorPosition(pos);
     }
+    
+
+
+    public void resetKI()
+    {
+        shootPID.reset(ShootHood.getSelectedSensorPosition());
+    }
+
+
 
     public double getCameraHeight()
     {
         //TODO find greer ratio and hope this works
-        return Math.sin(getCameraAngle());
+        return VISION.hoodLength * Math.sin(getCameraAngle());
+        //sin(theta) = opp/hyp
+        //hypsintheta = opp
     }
 
     public double getCameraAngle()
     {
-        return MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition() + VISION.angleNativeCameraAtRest, 1);
+        return MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition() + VISION.angleNativeCameraAtRest, VISION.greerRatio);
+    }
+
+
+
+    public double geterror()
+    {
+        return shootPID.getPositionError();
+    }
+
+    public double getveleror()
+    {
+        return shootPID.getVelocityError();
     }
 
 

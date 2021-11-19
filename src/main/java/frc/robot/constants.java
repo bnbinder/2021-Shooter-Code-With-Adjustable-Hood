@@ -44,14 +44,14 @@ public final class Constants {
         public static double kP = 1;
         public static double kI = 0;
         public static double kD = 0;
-        public static double kF = 0; //! (%ofMotor x 1023) / maxNativeVelocity
+        public static double kF = 0; //! (%ofMotor x 1023) / maxNativeVelocity this also might be wrong
         
         public static double shootOpenRampRate = 0.1;
         public static double shootCloseRampRate = 0.1;
         public static double shootHoodOpenRamp = 0.1;
         public static double shootHoodCloseRamp = 0.1;
 
-        public static double oneFullRotation = 1023;
+        public static double oneFullRotationPIDF = 1023; //when the fuck will i use this
         public static double maxNativeVelocity = 2084; //TODO make sure this is right for talon fx
 
         public static double hoodMaxVel = 5; //TODO get these
@@ -60,16 +60,26 @@ public final class Constants {
         //TODO dont change P unless
         //TODO increase D slowly 
         public static double hoodKP = 0.00005; //0.00010;
-        public static double hoodKI = 0; //0.000000005;
-        public static double hoodKD = 0.0000001; //0.000000017;
+                                        //0.00005
+        public static double hoodKI = 0.000000; //or 1
+        public static double hoodKD = 0.00000023; //0.000000017;
         public static double hoodKF = 0;
     }
 
     public static class VISION
     {
+        //? should have made hood and shoot class seperate, too late now this houses all the hood classes starting now 11/19/21
+
+
+        public static double greerRatio = 60/10; //TODO theres more lol
+        public static double hoodLength = 0; //TODO find this bullshit (prob on cad)
         public static double heightGoal = 0;
-        public static double heigtCameraAtRest = 0;
-        public static double angleNativeCameraAtRest = 0;
-        public static double BindersConstant = 0;
+        public static double heigtCameraAtRest = 0; //at rest on actual 3d printed part lol
+        public static double angleNativeCameraAtRest = 0; //on 3d print part
+        public static double BindersConstant = 0; //:tro:
+
+        public static double setPoint0 = 700;
+        //set point 700 moves arm up to 25 native units
+        //with respect to current P and D values (0.00005 and 0.00000023)
     }
 }
