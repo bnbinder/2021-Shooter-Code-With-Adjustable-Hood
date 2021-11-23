@@ -49,7 +49,7 @@ public class Limelight {
     //!      i am so fucking funny laugh
     public void autoShit()
     {
-        
+        //may need sine or cosine equation depending on needs of auto shoot velocity
     }
 
 
