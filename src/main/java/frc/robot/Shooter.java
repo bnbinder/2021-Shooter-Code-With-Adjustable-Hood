@@ -167,11 +167,11 @@ public class Shooter {
 
     public void updateShoot()
     {
-        SmartDashboard.putNumber("leftshootsensor", ShootLeft.getSelectedSensorPosition());
-        SmartDashboard.putNumber("rightshootsensor", ShootRight.getSelectedSensorPosition());
+        SmartDashboard.putNumber("leftshootsensorV", ShootLeft.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("rightshootsensorV", ShootRight.getSelectedSensorVelocity());
         SmartDashboard.putNumber("hoodsensor", ShootHood.getSelectedSensorPosition());
 
-        SmartDashboard.putNumber("gvcgyvcgvucvug", ShootHood.getSelectedSensorVelocity());
+        //SmartDashboard.putNumber("gvcgyvcgvucvug", ShootHood.getSelectedSensorVelocity());
         ShootLeft.setInverted(true);
 
         leftShootPosNative = ShootLeft.getSelectedSensorPosition();

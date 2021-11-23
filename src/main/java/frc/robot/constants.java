@@ -46,8 +46,8 @@ public final class Constants {
         public static double kD = 0;
         public static double kF = 0; //! (%ofMotor x 1023) / maxNativeVelocity this also might be wrong
         
-        public static double shootOpenRampRate = 0.1;
-        public static double shootCloseRampRate = 0.1;
+        public static double shootOpenRampRate = 0.5;
+        public static double shootCloseRampRate = 0.5;
         public static double shootHoodOpenRamp = 0.1;
         public static double shootHoodCloseRamp = 0.1;
 
