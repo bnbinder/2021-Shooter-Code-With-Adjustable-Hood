@@ -25,7 +25,7 @@ public class Limelight {
     private Drive mDrive = Drive.getInstance();
     private Shooter mShoot = Shooter.getInstance();
     private double complementAngy;
-    private double horizonTX, verticTY, distance, hoodPos;
+    private double horizonTX, verticTY, distance, hoodPos, shitSpeed;
 
     private Limelight()
     {
@@ -46,12 +46,19 @@ public class Limelight {
         //!mShoot.shootHoodPercent(mShoot.shootCalculateShit(hoodPos));
     }
 
+    //!      i am so fucking funny laugh
+    public void autoShit()
+    {
+        
+    }
+
 
     public double getDistance()
     {
         // d = distance, h2 = height of goal, h1 = heihgt of camera, a1 = angle from robot to camera, a2 = angle from camera to target / error
         //d = (h2-h1) / tan(a1+a2)
         //TODO i hope ty gives us right angle, also need to test the nativeToDegree i created
+        //TODO also see how to get a2 correctly, dont know if this is the correct way
         complementAngy = 180 - mShoot.getCameraAngle();
         return (mShoot.getCameraHeight() - VISION.heightGoal) / 
                         Math.tan(complementAngy + verticTY);

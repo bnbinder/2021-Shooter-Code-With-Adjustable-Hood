@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
   private double rightOut;
   private double leftTurn;
   private double rightTurn;
+  
   private double var = 0;
 
   private Timer LeTimer = new Timer();
@@ -43,8 +44,10 @@ public class Robot extends TimedRobot {
 
   private Command autoCommand;
 
-  private double max;
-  private double realPower;
+  private double max; //slider number
+  private double realPower; //calculate the real power 
+  //needed because this cant be changed or var will be changed since var has limit and this dont
+  //i think, or im just dumb and am using two vars when only one is needed
  
 
   private XboxController xbox = new XboxController(0);
@@ -56,7 +59,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {}
 
   @Override
-  public void autonomousInit() {
+  public void autonomousInit() { //i should delete this before i accidentally press auto
     autoCommand = new DriveStr8();
     autoCommand.schedule();
   }
@@ -108,7 +111,8 @@ public class Robot extends TimedRobot {
 
     if(xbox.getRawAxis(1) > 0)
     {
-      //mShoot.shootPercent(xbox.getRawAxis(1));
+      //?mShoot.shootVelocity(xbox.getRawAxis(1) * VISION.minimumShitSpeed);
+      //TODO test this tommorrow or sometime
     }
     else if(xbox.getAButton())
     {
@@ -147,8 +151,8 @@ public class Robot extends TimedRobot {
     }
     SmartDashboard.putNumber("3000calculate", mShoot.shootCalculateShit(3000));
     SmartDashboard.putNumber("ff", mShoot.ffHood(2000));
-    SmartDashboard.putNumber("4000 setpoint bonless wings", mShoot.shootCalculateShit(4000));
-    SmartDashboard.putNumber("2000 setpoint bonless wings", mShoot.shootCalculateShit(2000));
+    SmartDashboard.putNumber("getCamHit", mShoot.getCameraHeight());
+    SmartDashboard.putNumber("getCamAng", mShoot.getCameraAngle());
     SmartDashboard.putNumber("var", var);
     SmartDashboard.putNumber("shoot ereor", mShoot.geterror());
     SmartDashboard.putNumber("shoottvelo eroer", mShoot.getveleror());
@@ -160,7 +164,7 @@ public class Robot extends TimedRobot {
 
     
     max = SmartDashboard.getNumber("maxx", 0);
-    SmartDashboard.putNumber("the thing", mShoot.shootCalculateShit(max + mShoot.ffHood(max)));
+    SmartDashboard.putNumber("the thing", mShoot.shootCalculateShit(max));
     realPower = SmartDashboard.getNumber("the thing", 0);
     SmartDashboard.putNumber("imsoscard", realPower);
     

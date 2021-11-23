@@ -40,6 +40,8 @@ public class Shooter {
                    averageShootNativeDistance, averageShootInchesDistance, 
                    averageShootNativePer100ms, averageShootInchesPerSec;
 
+    private double ff;
+
     private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(SHOOT.hoodMaxVel, SHOOT.hoodMaxAccel);
     private ProfiledPIDController shootPID = new ProfiledPIDController(SHOOT.hoodKP, SHOOT.hoodKI, SHOOT.hoodKD, constraints);
 
@@ -213,6 +215,8 @@ public class Shooter {
     {
         pos = MkUtil.limit(pos, 100, 6400);
         //ShootHood.set(ControlMode.Position, pos);
+
+        //!    mfw no position control :(
     }
 
     public void setHoodPos(double pos)
@@ -281,6 +285,11 @@ public class Shooter {
     public double shootCalculateShit(double goal)
     {
         goal = MkUtil.limit(goal, 100, 6400);
+        ff = ffHood(goal);
+        goal = MkUtil.limit(goal + ff, 100, 6400);
+        //i dont know if this is redundant but idk if ff (if ff is added to first limit) will be
+        //goal that is not within limits of 100 and 6400
+        //if goal is 7000, and ff is in the limit, idk if ff will equal ff of 7000 or ff of 6400
         return shootPID.calculate(getHoodSensorPos(), goal);
     }
     
