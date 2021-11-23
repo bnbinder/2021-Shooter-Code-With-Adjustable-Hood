@@ -247,6 +247,11 @@ public class Shooter {
         return VISION.angleNativeCameraAtRest + MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition(), VISION.totalGreerRatio);
     }
 
+    public double getCamerAngleWithout()
+    {
+        return MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition(), VISION.totalGreerRatio);
+    }
+
     public double ffHood(double setpoint)
     {
         //cos zero = pi/2
