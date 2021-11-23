@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Drive;
@@ -32,13 +36,16 @@ public class Robot extends TimedRobot {
   private double rightOut;
   private double leftTurn;
   private double rightTurn;
-
   private double var = 0;
 
   private Timer LeTimer = new Timer();
   private Timer endTime = new Timer();
 
   private Command autoCommand;
+
+  private double max;
+  private double realPower;
+ 
 
   private XboxController xbox = new XboxController(0);
 
@@ -61,6 +68,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    SmartDashboard.putNumber("maxx", 0);
+    
+
     //mDrive.setMagic(12);
     LeTimer.start();
     mDrive.resetOdo();
@@ -102,7 +112,8 @@ public class Robot extends TimedRobot {
     }
     else if(xbox.getAButton())
     {
-      var = mShoot.shootCalculateShit(1000); //4000
+      //var = mShoot.shootCalculateShit(1000); //4000
+      var = realPower;
       if(var > .15)
       {
         var = 0.15;
@@ -111,7 +122,7 @@ public class Robot extends TimedRobot {
     }
     else if(xbox.getBButton())
     {
-      var = mShoot.shootCalculateShit(700); //2000
+      var = realPower;
       if(var > .15)
       {
         var = 0.15;
@@ -125,6 +136,7 @@ public class Robot extends TimedRobot {
       mShoot.shootHoodPercent(0);
       mShoot.resetKI();
       var = 0;
+      //realPower = 0;
     }
 
 
@@ -134,6 +146,7 @@ public class Robot extends TimedRobot {
      // mDrive.motionMagical();
     }
     SmartDashboard.putNumber("3000calculate", mShoot.shootCalculateShit(3000));
+    SmartDashboard.putNumber("ff", mShoot.ffHood(2000));
     SmartDashboard.putNumber("4000 setpoint bonless wings", mShoot.shootCalculateShit(4000));
     SmartDashboard.putNumber("2000 setpoint bonless wings", mShoot.shootCalculateShit(2000));
     SmartDashboard.putNumber("var", var);
@@ -144,6 +157,12 @@ public class Robot extends TimedRobot {
     //XYPlane.getInstance().PIDset(XYPlane.getInstance().fuckyou());
     SmartDashboard.putBoolean("abut", xbox.getAButton());
     SmartDashboard.putNumber("time", LeTimer.get());
+
+    
+    max = SmartDashboard.getNumber("maxx", 0);
+    SmartDashboard.putNumber("the thing", mShoot.shootCalculateShit(max + mShoot.ffHood(max)));
+    realPower = SmartDashboard.getNumber("the thing", 0);
+    SmartDashboard.putNumber("imsoscard", realPower);
     
   }
 

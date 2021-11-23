@@ -70,16 +70,19 @@ public final class Constants {
     {
         //? should have made hood and shoot class seperate, too late now this houses all the hood classes starting now 11/19/21
 
-
-        public static double greerRatio = 60/10; //TODO theres more lol
-        public static double hoodLength = 0; //TODO find this bullshit (prob on cad)
-        public static double heightGoal = 0;
+                          //!  lol
+        public static double greerRatioLilToBigOne = 10/60; //TODO theres more lol 
+        public static double greerRatioLilToBigTwo = 14/52;
+        public static double totalGreerRatio = 22.2857142857; //amount little has to spin for one big
+        public static double hoodLength = 18.145386; //TODO find this bullshit (prob on cad)
+        public static double heightGoal = 89.75;
         public static double heigtCameraAtRest = 0; //at rest on actual 3d printed part lol
-        public static double angleNativeCameraAtRest = 0; //on 3d print part
-        public static double BindersConstant = 0; //:tro:
+        public static double angleNativeCameraAtRest = 18; //on 3d print part
+        public static double BindersConstant = 1; //:tro:
 
-        public static double setPoint0 = 700;
-        //set point 700 moves arm up to 25 native units
+        public static double setPoint0 = 600; //TODO need to get more accurate thing
+        //set point 700 moves arm up to 25 native units (basically 0)
         //with respect to current P and D values (0.00005 and 0.00000023)
+        public static double maxRotate = 4000; //TODO need to stop being a bitch and make this shit higher
     }
 }

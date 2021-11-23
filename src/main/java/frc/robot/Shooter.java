@@ -112,6 +112,7 @@ public class Shooter {
 
         //ShootHood.configPeakOutputForward(.3);
         //ShootHood.configPeakOutputReverse(-.3);
+        //!fucked with the motors, since we arent using built in pidf controller
 
 
 
@@ -147,10 +148,14 @@ public class Shooter {
         ShootHood.configNeutralDeadband(0.001); 
         //this too
 
+        /*
         ShootHood.config_kP(0, SHOOT.hoodKP);
         ShootHood.config_kI(0, SHOOT.hoodKI);
         ShootHood.config_kD(0, SHOOT.hoodKD);
         ShootHood.config_kF(0, SHOOT.hoodKF);
+        */
+        //TODO hope commenting this shit doesnt affect pid controller
+        //! commenting it out since it doesnt affect pid controller, but the built in pidf (i think and hope)
     }
     
     public static Shooter getInstance()
@@ -234,10 +239,16 @@ public class Shooter {
 
     public double getCameraAngle()
     {
-        return MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition() + VISION.angleNativeCameraAtRest, VISION.greerRatio);
+        
+        return VISION.angleNativeCameraAtRest + MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition(), VISION.totalGreerRatio);
     }
 
-
+    public double ffHood(double setpoint)
+    {
+        //cos zero = pi/2
+        //set zero to minimum steady state
+        return VISION.setPoint0 * (Math.cos(((Constants.kPi * 1.1) / (VISION.maxRotate * 2)) * setpoint));
+    }
 
     public double geterror()
     {
