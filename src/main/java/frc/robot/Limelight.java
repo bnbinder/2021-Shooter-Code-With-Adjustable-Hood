@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import frc.robot.Constants.SHOOT;
 import frc.robot.Constants.VISION;
@@ -17,7 +18,7 @@ public class Limelight {
     private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     private NetworkTableEntry horizonAngle = table.getEntry("tx");
     private NetworkTableEntry verticAngle = table.getEntry("ty");
-    private NetworkTableEntry seeTarget = table.getEntry("tv");
+    private NetworkTableEntry seeTarg = table.getEntry("tv");
     private NetworkTableEntry areaOfTarget = table.getEntry("ta");
     private NetworkTableEntry pipeline = table.getEntry("pipeline");
     private TrapezoidProfile.Constraints constraint = new TrapezoidProfile.Constraints();
@@ -25,25 +26,47 @@ public class Limelight {
     private Drive mDrive = Drive.getInstance();
     private Shooter mShoot = Shooter.getInstance();
     private double complementAngy;
-    private double horizonTX, verticTY, distance, hoodPos, shitSpeed;
+    private double horizonTX, verticTY, distance, hoodPos, shitSpeed, hoodDGAIN;
+    private boolean seeTarget;
 
     private Limelight()
     {
         pipeline.setValue(0);
     }
 
+    
+    public static Limelight getInstance()
+    {
+        return InstanceHolder.mInstance;
+    }
+
+
     public void updateAutoShoot()
     {
         horizonTX = horizonAngle.getDouble(0.0);
         verticTY = verticAngle.getDouble(0.0);
         distance = getDistance();
-        //autohood();
+        seeTarget = seeTarg.getBoolean(false);
+        SmartDashboard.putNumber("hoodPos", hoodPos);
+        autoHood();
     }
 
     public void autoHood()
     {
-        hoodPos = distance * VISION.BindersConstant; //my constant lol
-        //!mShoot.shootHoodPercent(mShoot.shootCalculateShit(hoodPos));
+        if(seeTarget == false)
+        {
+            //mShoot.shootHoodPercent(mShoot.shootCalculateShit(4000));
+            hoodPos = mShoot.getHoodSensorPos();
+        }
+        else if(seeTarget && Math.abs(verticTY) < VISION.limelightThreshold)
+        {
+            //mShoot.shootHoodPercent(mShoot.shootCalculateShit(hoodPos));
+        }
+        else if(seeTarget && Math.abs(verticTY) > VISION.limelightThreshold)
+        {
+            //mShoot.shootHoodPercent(verticTY * -1);
+            hoodPos = mShoot.getHoodSensorPos();
+        }
     }
 
     //!      i am so fucking funny laugh
@@ -63,4 +86,11 @@ public class Limelight {
         return (mShoot.getCameraHeight() - VISION.heightGoal) / 
                         Math.tan(complementAngy + verticTY);
     }
+
+        
+    private static class InstanceHolder
+    {
+        private static final Limelight mInstance = new Limelight();
+    } 
+    
 }

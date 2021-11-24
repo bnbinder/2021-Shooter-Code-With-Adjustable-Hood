@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Drive;
+import frc.robot.Constants.SHOOT;
+import frc.robot.Constants.VISION;
 import frc.robot.commands.DriveStr8;
 
 /**
@@ -31,6 +33,9 @@ public class Robot extends TimedRobot {
 
   private Drive mDrive = Drive.getInstance();
   private Shooter mShoot = Shooter.getInstance();
+  private Limelight mLimelight = Limelight.getInstance();
+
+  private double shootff;
 
   private double leftOut;
   private double rightOut;
@@ -111,7 +116,8 @@ public class Robot extends TimedRobot {
 
     if(xbox.getRawAxis(1) > 0)
     {
-      //?mShoot.shootVelocity(xbox.getRawAxis(1) * VISION.minimumShitSpeed);
+      shootff = mShoot.ffshoot(xbox.getRawAxis(1) * SHOOT.maxNativeVelocity);
+      mShoot.shootVelocity(shootff + (xbox.getRawAxis(1) * SHOOT.maxNativeVelocity));
       //TODO test this tommorrow or sometime
     }
     else if(xbox.getAButton())
@@ -149,7 +155,7 @@ public class Robot extends TimedRobot {
     {
      // mDrive.motionMagical();
     }
-    SmartDashboard.putNumber("3000calculate", mShoot.shootCalculateShit(3000));
+    SmartDashboard.putNumber("ffshoot", shootff);
     SmartDashboard.putNumber("ff", mShoot.ffHood(2000));
     SmartDashboard.putNumber("getCamHit", mShoot.getCameraHeight());
     SmartDashboard.putNumber("getCamAng", mShoot.getCameraAngle());
@@ -198,5 +204,6 @@ public class Robot extends TimedRobot {
   {
     mDrive.updateDrive();
     mShoot.updateShoot();
+    mLimelight.updateAutoShoot();
   }
 }

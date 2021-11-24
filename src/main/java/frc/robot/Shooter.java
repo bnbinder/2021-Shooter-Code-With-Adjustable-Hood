@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Constants.HOOD;
 import frc.robot.Constants.SHOOT;
 import frc.robot.Drive;
 import frc.robot.Constants.VISION;
@@ -28,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 public class Shooter {
     TalonFX ShootRight = new TalonFX(SHOOT.shootRightCANID);
     TalonFX ShootLeft= new TalonFX(SHOOT.shootLeftCANID);
-    TalonFX ShootHood = new TalonFX(SHOOT.shootHoodCANID);
+    TalonFX ShootHood = new TalonFX(HOOD.shootHoodCANID);
 
     private Drive mDrive = Drive.getInstance();
     //private Shooter mShoot = Shooter.getInstance(); im a moron
@@ -42,8 +43,8 @@ public class Shooter {
 
     private double ff;
 
-    private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(SHOOT.hoodMaxVel, SHOOT.hoodMaxAccel);
-    private ProfiledPIDController shootPID = new ProfiledPIDController(SHOOT.hoodKP, SHOOT.hoodKI, SHOOT.hoodKD, constraints);
+    private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(HOOD.hoodMaxVel, HOOD.hoodMaxAccel);
+    private ProfiledPIDController hoodPID = new ProfiledPIDController(HOOD.hoodKP, HOOD.hoodKI, HOOD.hoodKD, constraints);
 
 
     private Shooter()
@@ -106,12 +107,12 @@ public class Shooter {
 
 
 
-        ShootLeft.configPeakOutputForward(1);
-        ShootLeft.configPeakOutputReverse(.4);
+/*        ShootLeft.configPeakOutputForward(1);
+        ShootLeft.configPeakOutputReverse(1);
 
         ShootRight.configPeakOutputForward(1);
-        ShootRight.configPeakOutputReverse(.4);
-
+        ShootRight.configPeakOutputReverse(1);
+*/
         //ShootHood.configPeakOutputForward(.3);
         //ShootHood.configPeakOutputReverse(-.3);
         //!fucked with the motors, since we arent using built in pidf controller
@@ -126,12 +127,12 @@ public class Shooter {
 
         ShootLeft.configOpenloopRamp(SHOOT.shootOpenRampRate);
         ShootRight.configOpenloopRamp(SHOOT.shootOpenRampRate);
-        ShootHood.configOpenloopRamp(SHOOT.shootHoodOpenRamp);
+        ShootHood.configOpenloopRamp(HOOD.shootHoodOpenRamp);
 
 
         ShootLeft.configClosedloopRamp(SHOOT.shootCloseRampRate);
         ShootRight.configClosedloopRamp(SHOOT.shootCloseRampRate);
-        //ShootHood.configClosedloopRamp(SHOOT.shootHoodCloseRamp);
+        //ShootHood.configClosedloopRamp(HOOD.shootHoodCloseRamp);
 
         ShootLeft.configMotionSCurveStrength(1);
         ShootRight.configMotionSCurveStrength(1);
@@ -172,7 +173,7 @@ public class Shooter {
         SmartDashboard.putNumber("hoodsensor", ShootHood.getSelectedSensorPosition());
 
         //SmartDashboard.putNumber("gvcgyvcgvucvug", ShootHood.getSelectedSensorVelocity());
-        ShootLeft.setInverted(true);
+        ShootRight.setInverted(true);
 
         leftShootPosNative = ShootLeft.getSelectedSensorPosition();
         rightShootPosNative = ShootRight.getSelectedSensorPosition();
@@ -228,7 +229,7 @@ public class Shooter {
 
     public void resetKI()
     {
-        shootPID.reset(ShootHood.getSelectedSensorPosition());
+        hoodPID.reset(ShootHood.getSelectedSensorPosition());
     }
 
 
@@ -243,7 +244,6 @@ public class Shooter {
 
     public double getCameraAngle()
     {
-        
         return VISION.angleNativeCameraAtRest + MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition(), VISION.totalGreerRatio);
     }
 
@@ -259,14 +259,19 @@ public class Shooter {
         return VISION.setPoint0 * (Math.cos(((Constants.kPi * 1.1) / (VISION.maxRotate * 2)) * setpoint));
     }
 
+    public double ffshoot(double setpoint)
+    {
+        return (((SHOOT.maxShootError * setpoint) / SHOOT.maxNativeVelocity));
+    }
+
     public double geterror()
     {
-        return shootPID.getPositionError();
+        return hoodPID.getPositionError();
     }
 
     public double getveleror()
     {
-        return shootPID.getVelocityError();
+        return hoodPID.getVelocityError();
     }
 
 
@@ -282,8 +287,8 @@ public class Shooter {
    
     public void resetPID()
     {
-        shootPID.reset(0, 0);
-        shootPID.setGoal(0);
+        hoodPID.reset(0, 0);
+        hoodPID.setGoal(0);
     }
 
 
@@ -295,7 +300,7 @@ public class Shooter {
         //i dont know if this is redundant but idk if ff (if ff is added to first limit) will be
         //goal that is not within limits of 100 and 6400
         //if goal is 7000, and ff is in the limit, idk if ff will equal ff of 7000 or ff of 6400
-        return shootPID.calculate(getHoodSensorPos(), goal);
+        return hoodPID.calculate(getHoodSensorPos(), goal);
     }
     
     private static class InstanceHolder

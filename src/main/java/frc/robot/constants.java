@@ -35,27 +35,35 @@ public final class Constants {
         
         public static int shootRightCANID = 7;
         public static int shootLeftCANID = 5;
-        public static int shootHoodCANID = 8; 
+        
 
         public static double maxAutoVelocity = 0;
         public static double maxAutoAcceleration = 0;
         //TODO find and set these
          
-        public static double kP = 1;
+        public static double kP = 0.7;
         public static double kI = 0;
         public static double kD = 0;
         public static double kF = 0; //! (%ofMotor x 1023) / maxNativeVelocity this also might be wrong
         
         public static double shootOpenRampRate = 0.5;
         public static double shootCloseRampRate = 0.5;
-        public static double shootHoodOpenRamp = 0.1;
-        public static double shootHoodCloseRamp = 0.1;
 
         public static double oneFullRotationPIDF = 1023; //when the fuck will i use this
-        public static double maxNativeVelocity = 2084; //TODO make sure this is right for talon fx
+        //is this even right
 
-        public static double hoodMaxVel = 5; //TODO get these
+        public static double maxNativeVelocity = 16000; //TODO make sure this is right for talon fx
+        public static double maxShootError = 1100;
+        //18000 - 1200er
+        //19000 - 2800
+    }
+
+    public static class HOOD
+    {
+        public static int shootHoodCANID = 8; 
+        public static double hoodMaxVel = 0; //TODO get these
         public static double hoodMaxAccel = 0;
+
 
         //TODO dont change P unless
         //TODO increase D slowly 
@@ -64,6 +72,9 @@ public final class Constants {
         public static double hoodKI = 0.000000; //or 1
         public static double hoodKD = 0.00000023; //0.000000017;
         public static double hoodKF = 0;
+
+        public static double shootHoodOpenRamp = 0.1;
+        public static double shootHoodCloseRamp = 0.1;
     }
 
     public static class VISION
@@ -86,6 +97,8 @@ public final class Constants {
         public static double setPoint0 = 600; //TODO need to get more accurate thing
         //set point 700 moves arm up to 25 native units (basically 0)
         //with respect to current P and D values (0.00005 and 0.00000023)
-        public static double maxRotate = 4000; //TODO need to stop being a bitch and make this shit higher
+        public static double maxRotate = 4500; //TODO need to stop being a bitch and make this shit higher
+    
+        public static double limelightThreshold = 0.01; //TODO need to do this
     }
 }
