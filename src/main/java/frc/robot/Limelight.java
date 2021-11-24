@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.opencv.features2d.FlannBasedMatcher;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -27,7 +29,8 @@ public class Limelight {
     private Shooter mShoot = Shooter.getInstance();
     private double complementAngy;
     private double horizonTX, verticTY, distance, hoodPos, shitSpeed, hoodDGAIN;
-    private boolean seeTarget;
+    private double seeTarget;
+    private boolean virgin = true;
 
     private Limelight()
     {
@@ -46,26 +49,30 @@ public class Limelight {
         horizonTX = horizonAngle.getDouble(0.0);
         verticTY = verticAngle.getDouble(0.0);
         distance = getDistance();
-        seeTarget = seeTarg.getBoolean(false);
+        seeTarget = seeTarg.getDouble(0.0);
         SmartDashboard.putNumber("hoodPos", hoodPos);
+        SmartDashboard.putNumber("virg", seeTarget);
         autoHood();
     }
 
     public void autoHood()
     {
-        if(seeTarget == false)
+        if(seeTarget == 0)
         {
             //mShoot.shootHoodPercent(mShoot.shootCalculateShit(4000));
             hoodPos = mShoot.getHoodSensorPos();
+            virgin = false;
         }
-        else if(seeTarget && Math.abs(verticTY) < VISION.limelightThreshold)
+        else if(seeTarget == 1 && Math.abs(verticTY) <= VISION.limelightThreshold)
         {
             //mShoot.shootHoodPercent(mShoot.shootCalculateShit(hoodPos));
+            //virgin = true;
         }
-        else if(seeTarget && Math.abs(verticTY) > VISION.limelightThreshold)
+        else if(seeTarget == 1 && Math.abs(verticTY) > VISION.limelightThreshold)
         {
             //mShoot.shootHoodPercent(verticTY * -1);
             hoodPos = mShoot.getHoodSensorPos();
+            virgin = true;
         }
     }
 

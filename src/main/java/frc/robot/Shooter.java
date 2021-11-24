@@ -257,6 +257,8 @@ public class Shooter {
         //cos zero = pi/2
         //set zero to minimum steady state
         return VISION.setPoint0 * (Math.cos(((Constants.kPi * 1.1) / (VISION.maxRotate * 2)) * setpoint));
+        //      original equation that was working 
+        //!     600 or 700 * (Math.cos(((Constants.kPi * 1.1 or 1) / (4000 * 2)) * setpoint));
     }
 
     public double ffshoot(double setpoint)

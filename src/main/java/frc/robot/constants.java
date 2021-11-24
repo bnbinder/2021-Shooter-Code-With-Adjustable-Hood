@@ -99,6 +99,6 @@ public final class Constants {
         //with respect to current P and D values (0.00005 and 0.00000023)
         public static double maxRotate = 4500; //TODO need to stop being a bitch and make this shit higher
     
-        public static double limelightThreshold = 0.01; //TODO need to do this
+        public static double limelightThreshold = 13; //TODO need to do this
     }
 }
