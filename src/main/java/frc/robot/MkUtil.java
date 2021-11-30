@@ -123,4 +123,21 @@ public class MkUtil {
   {
     return ((gimmeRots * greerRatio) * 360) / 2048;
   }
+
+  //idk how to convert bool to double and vice versa
+  public static boolean doubleToBoolean(double bool)
+  {
+    if(bool == 1.0)
+    {
+      return true;
+    }
+    else if(bool == 0.0)
+    {
+      return false;
+    }
+    else
+    {
+      return false;
+    }
+  }
 }
