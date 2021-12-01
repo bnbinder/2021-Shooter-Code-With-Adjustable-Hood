@@ -30,7 +30,7 @@ public class Limelight {
     private double complementAngy;
     private double horizonTX, verticTY, distance, hoodPos, shitSpeed, hoodDGAIN;
     private boolean seeTarget;
-    private boolean virgin = true;
+    private boolean stuff = true;
 
     private Limelight()
     {
@@ -51,7 +51,9 @@ public class Limelight {
         distance = getDistance();
         seeTarget = MkUtil.doubleToBoolean(seeTarg.getDouble(0.0));
         SmartDashboard.putNumber("hoodPos", hoodPos);
-        SmartDashboard.putBoolean("verig", virgin);
+        SmartDashboard.putBoolean("verig", stuff);
+        SmartDashboard.putNumber("distance", getDistance());
+
         autoHood();
     }
 
@@ -61,12 +63,12 @@ public class Limelight {
         {
             //mShoot.shootHoodPercent(mShoot.shootCalculateShit(4000));
             hoodPos = mShoot.getHoodSensorPos();
-            virgin = false;
+            stuff = false;
         }
         else if(seeTarget && Math.abs(verticTY) <= VISION.limelightThreshold)
         {
             //mShoot.shootHoodPercent(mShoot.shootCalculateShit(hoodPos));
-            virgin = true;
+            stuff = true;
         }
         else if(seeTarget  && Math.abs(verticTY) > VISION.limelightThreshold)
         {
@@ -88,9 +90,13 @@ public class Limelight {
         //d = (h2-h1) / tan(a1+a2)
         //TODO i hope ty gives us right angle, also need to test the nativeToDegree i created
         //TODO also see how to get a2 correctly, dont know if this is the correct way
+        
+        //TODO while i can account for the y movement of the camera, i need to account for the x movement of the camer
+        //TODO work on this after working on the height and angle shit
         complementAngy = 180 - mShoot.getCameraAngle();
         return (mShoot.getCameraHeight() - VISION.heightGoal) / 
                         Math.tan(complementAngy + verticTY);
+        //! subtract the positive x value that the camera is at; camera is up, its x amount away from x position of starting posititon
     }
 
         

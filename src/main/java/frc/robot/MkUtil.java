@@ -124,6 +124,12 @@ public class MkUtil {
     return ((gimmeRots * greerRatio) * 360) / 2048;
   }
 
+  public static double degreesToNative(double gimmeDeg)
+  {
+    //! need to see if greer ratio affects degrees as it affects native
+    return (gimmeDeg * 2048) / 360;
+  }
+
   //idk how to convert bool to double and vice versa
   public static boolean doubleToBoolean(double bool)
   {

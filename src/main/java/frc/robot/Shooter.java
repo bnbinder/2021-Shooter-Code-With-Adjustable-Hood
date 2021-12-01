@@ -171,7 +171,9 @@ public class Shooter {
         SmartDashboard.putNumber("leftshootsensorV", ShootLeft.getSelectedSensorVelocity());
         SmartDashboard.putNumber("rightshootsensorV", ShootRight.getSelectedSensorVelocity());
         SmartDashboard.putNumber("hoodsensor", ShootHood.getSelectedSensorPosition());
-
+        SmartDashboard.putNumber("height", getCameraHeight());
+        SmartDashboard.putNumber("angle without hood", getCamerAngleWithout());
+        SmartDashboard.putNumber("angle with hood", getCameraAngle());
         //SmartDashboard.putNumber("gvcgyvcgvucvug", ShootHood.getSelectedSensorVelocity());
         ShootRight.setInverted(true);
 
@@ -237,14 +239,14 @@ public class Shooter {
     public double getCameraHeight()
     {
         //TODO find greer ratio and hope this works
-        return VISION.hoodLength * Math.sin(getCameraAngle());
+        return (VISION.hoodLength * Math.sin(getCameraAngle())) + VISION.cameraHeightFromRobo;
         //sin(theta) = opp/hyp
         //hypsintheta = opp
     }
 
     public double getCameraAngle()
     {
-        return VISION.angleNativeCameraAtRest + MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition(), VISION.totalGreerRatio);
+        return VISION.angleDegreeCameraRest + MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition(), VISION.totalGreerRatio);
     }
 
     public double getCamerAngleWithout()

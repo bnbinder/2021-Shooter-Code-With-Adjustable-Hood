@@ -87,8 +87,9 @@ public final class Constants {
         public static double totalGreerRatio = 22.2857142857; //amount little has to spin for one big
         public static double hoodLength = 18.145386; //TODO find this bullshit (prob on cad)
         public static double heightGoal = 89.75;
-        public static double heigtCameraAtRest = 0; //!may not need this //at rest on actual 3d printed part lol
-        public static double angleNativeCameraAtRest = 18; //on 3d print part
+        public static double cameraHeightFromRobo = 0; //!may not need this //at rest on actual 3d printed part lol
+        public static double angleNativeCameraAtRest = 0; //on 3d print part
+        public static double angleDegreeCameraRest = 18;
         public static double BindersConstant = 1; //:tro:
 
         public static double minimumShitSpeed = 0; //at hood rest (or minimum degrees/rad/native if not good enough)
