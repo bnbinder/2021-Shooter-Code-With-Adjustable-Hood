@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants.DRIVE;
+import frc.robot.Constants;
 
 public class MkUtil {
 
@@ -121,13 +122,18 @@ public class MkUtil {
   //i hope this works
   public static double nativeToDegrees(double gimmeRots, double greerRatio)
   {
-    return ((gimmeRots * greerRatio) * 360) / 2048;
+    return (gimmeRots * 360) / (greerRatio * Constants.oneEncoderRotation);
   }
 
-  public static double degreesToNative(double gimmeDeg)
+  public static double degreesToNative(double gimmeDeg, double greerRatio)
   {
     //! need to see if greer ratio affects degrees as it affects native
-    return (gimmeDeg * 2048) / 360;
+    return (gimmeDeg * Constants.oneEncoderRotation * greerRatio) / 360;
+  }
+
+  public static double degreesToRadian(double degrees)
+  {
+    return degrees * (Constants.kPi/180);
   }
 
   //idk how to convert bool to double and vice versa

@@ -239,7 +239,7 @@ public class Shooter {
     public double getCameraHeight()
     {
         //TODO find greer ratio and hope this works
-        return (VISION.hoodLength * Math.sin(getCameraAngle())) + VISION.cameraHeightFromRobo;
+        return (VISION.hoodLength * Math.sin(MkUtil.degreesToRadian(getCameraAngle()))) + VISION.cameraHeightFromRobo;
         //sin(theta) = opp/hyp
         //hypsintheta = opp
     }

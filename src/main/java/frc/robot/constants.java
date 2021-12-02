@@ -8,6 +8,7 @@ package frc.robot;
 public final class Constants {
 
     public static double kPi = 3.14159265359;
+    public static double oneEncoderRotation = 2048;
 
     public static class DRIVE
     {
@@ -27,8 +28,8 @@ public final class Constants {
         public static double driveOpenRampRate = 0.5;
         public static double driveCloseRampRate = 0.5;
 
-        public static double oneFullRotation = 1023;
-        public static double maxNativeVelocity = 2084; //TODO make sure this is right for talon fx
+        //public static double oneFullRotation = 1023;
+        //public static double maxNativeVelocity = 2084; //TODO make sure this is right for talon fx
     }
 
     public static class SHOOT {
@@ -49,7 +50,7 @@ public final class Constants {
         public static double shootOpenRampRate = 0.5;
         public static double shootCloseRampRate = 0.5;
 
-        public static double oneFullRotationPIDF = 1023; //when the fuck will i use this
+        //public static double oneFullRotationPIDF = 1023; //when the fuck will i use this
         //is this even right
 
         public static double maxNativeVelocity = 16000; //TODO make sure this is right for talon fx
@@ -86,8 +87,8 @@ public final class Constants {
         public static double greerRatioLilToBigTwo = 14/52;
         public static double totalGreerRatio = 22.2857142857; //amount little has to spin for one big
         public static double hoodLength = 18.145386; //TODO find this bullshit (prob on cad)
-        public static double heightGoal = 89.75;
-        public static double cameraHeightFromRobo = 0; //!may not need this //at rest on actual 3d printed part lol
+        public static double heightGoal = 86.5;
+        public static double cameraHeightFromRobo = 45.5;
         public static double angleNativeCameraAtRest = 0; //on 3d print part
         public static double angleDegreeCameraRest = 18;
         public static double BindersConstant = 1; //:tro:

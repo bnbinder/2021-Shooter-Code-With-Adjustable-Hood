@@ -51,6 +51,7 @@ public class Limelight {
         distance = getDistance();
         seeTarget = MkUtil.doubleToBoolean(seeTarg.getDouble(0.0));
         SmartDashboard.putNumber("hoodPos", hoodPos);
+        SmartDashboard.putNumber("y", verticTY);
         SmartDashboard.putBoolean("verig", stuff);
         SmartDashboard.putNumber("distance", getDistance());
 
@@ -93,9 +94,9 @@ public class Limelight {
         
         //TODO while i can account for the y movement of the camera, i need to account for the x movement of the camer
         //TODO work on this after working on the height and angle shit
-        complementAngy = 180 - mShoot.getCameraAngle();
-        return (mShoot.getCameraHeight() - VISION.heightGoal) / 
-                        Math.tan(complementAngy + verticTY);
+        complementAngy = 90 - mShoot.getCameraAngle();
+        return (VISION.heightGoal - 56) / 
+                Math.tan(MkUtil.degreesToRadian(complementAngy + verticTY));
         //! subtract the positive x value that the camera is at; camera is up, its x amount away from x position of starting posititon
     }
 

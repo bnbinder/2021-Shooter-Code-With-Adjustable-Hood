@@ -114,7 +114,7 @@ public class Robot extends TimedRobot {
     //mDrive.setDrivePercent(leftOut, rightOut);
 
 
-    if(xbox.getRawAxis(1) > 0)
+    if(xbox.getRawAxis(1) > 0.1)
     {
       shootff = mShoot.ffshoot(xbox.getRawAxis(1) * SHOOT.maxNativeVelocity);
       mShoot.shootVelocity(shootff + (xbox.getRawAxis(1) * SHOOT.maxNativeVelocity));
@@ -124,9 +124,9 @@ public class Robot extends TimedRobot {
     {
       //var = mShoot.shootCalculateShit(1000); //4000
       var = realPower;
-      if(var > .15)
+      if(var > .17)
       {
-        var = 0.15;
+        var = 0.17;
       }
       mShoot.shootHoodPercent(var);
     }
@@ -157,8 +157,8 @@ public class Robot extends TimedRobot {
     }
     SmartDashboard.putNumber("ffshoot", shootff);
     SmartDashboard.putNumber("ff", mShoot.ffHood(2000));
-    SmartDashboard.putNumber("getCamHit", mShoot.getCameraHeight());
-    SmartDashboard.putNumber("getCamAng", mShoot.getCameraAngle());
+    //SmartDashboard.putNumber("getCamHit", mShoot.getCameraHeight());
+    //SmartDashboard.putNumber("getCamAng", mShoot.getCameraAngle());
     SmartDashboard.putNumber("var", var);
     SmartDashboard.putNumber("shoot ereor", mShoot.geterror());
     SmartDashboard.putNumber("shoottvelo eroer", mShoot.getveleror());
