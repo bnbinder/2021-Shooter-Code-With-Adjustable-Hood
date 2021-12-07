@@ -246,7 +246,7 @@ public class Shooter {
 
     public double getCameraAngle()
     {
-        return VISION.angleDegreeCameraRest + MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition(), VISION.totalGreerRatio);
+        return VISION.angleDegreeCameraRest + (MkUtil.nativeToDegrees(ShootHood.getSelectedSensorPosition(), VISION.totalGreerRatio));
     }
 
     public double getCamerAngleWithout()
@@ -299,7 +299,7 @@ public class Shooter {
     public double shootCalculateShit(double goal)
     {
         goal = MkUtil.limit(goal, 100, 6400);
-        ff = ffHood(goal);
+        ff = MkUtil.limit(ffHood(goal), 0, 600);
         goal = MkUtil.limit(goal + ff, 100, 6400);
         //i dont know if this is redundant but idk if ff (if ff is added to first limit) will be
         //goal that is not within limits of 100 and 6400

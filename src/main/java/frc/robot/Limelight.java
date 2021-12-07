@@ -95,7 +95,7 @@ public class Limelight {
         //TODO while i can account for the y movement of the camera, i need to account for the x movement of the camer
         //TODO work on this after working on the height and angle shit
         complementAngy = 90 - mShoot.getCameraAngle();
-        return (VISION.heightGoal - 56) / 
+        return (VISION.heightGoal - mShoot.getCameraHeight()) / 
                 Math.tan(MkUtil.degreesToRadian(complementAngy + verticTY));
         //! subtract the positive x value that the camera is at; camera is up, its x amount away from x position of starting posititon
     }

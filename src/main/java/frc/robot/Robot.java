@@ -37,6 +37,8 @@ public class Robot extends TimedRobot {
 
   private double shootff;
 
+  private boolean pressA = false;
+
   private double leftOut;
   private double rightOut;
   private double leftTurn;
@@ -85,6 +87,8 @@ public class Robot extends TimedRobot {
     mShoot.setHoodPos(0);
    // XYPlane.getInstance().resetShit();
     mShoot.resetPID();
+    mShoot.shootHoodPercent(0);
+    pressA = false;
   }
 
   @Override
@@ -120,16 +124,7 @@ public class Robot extends TimedRobot {
       mShoot.shootVelocity(shootff + (xbox.getRawAxis(1) * SHOOT.maxNativeVelocity));
       //TODO test this tommorrow or sometime
     }
-    else if(xbox.getAButton())
-    {
-      //var = mShoot.shootCalculateShit(1000); //4000
-      var = realPower;
-      if(var > .17)
-      {
-        var = 0.17;
-      }
-      mShoot.shootHoodPercent(var);
-    }
+    /*
     else if(xbox.getBButton())
     {
       var = realPower;
@@ -140,15 +135,38 @@ public class Robot extends TimedRobot {
       mShoot.shootHoodPercent(var);
      // XYPlane.getInstance().changebastatrsSensro();
     }
+    */
     else
     {
       mShoot.shootPercent(0);
-      mShoot.shootHoodPercent(0);
+      //mShoot.shootHoodPercent(0);
       mShoot.resetKI();
       var = 0;
       //realPower = 0;
     }
 
+    if(xbox.getAButtonPressed())
+    {
+      if(xbox.getAButtonReleased())
+      {
+        pressA = !pressA;
+      }
+    }
+
+    if(pressA)
+    {
+      //var = mShoot.shootCalculateShit(1000); //4000
+      var = realPower;
+      if(var > .17)
+      {
+        var = 0.17;
+      }
+      mShoot.shootHoodPercent(var);
+    }
+    else
+    {
+      mShoot.shootHoodPercent(0);
+    }
 
 
     if(mDrive.isMotionDone() == false)
@@ -156,7 +174,7 @@ public class Robot extends TimedRobot {
      // mDrive.motionMagical();
     }
     SmartDashboard.putNumber("ffshoot", shootff);
-    SmartDashboard.putNumber("ff", mShoot.ffHood(2000));
+    SmartDashboard.putNumber("ff", mShoot.ffHood(max));
     //SmartDashboard.putNumber("getCamHit", mShoot.getCameraHeight());
     //SmartDashboard.putNumber("getCamAng", mShoot.getCameraAngle());
     SmartDashboard.putNumber("var", var);
@@ -166,7 +184,7 @@ public class Robot extends TimedRobot {
     //XYPlane.getInstance().fuck();
     //XYPlane.getInstance().PIDset(XYPlane.getInstance().fuckyou());
     SmartDashboard.putBoolean("abut", xbox.getAButton());
-    SmartDashboard.putNumber("time", LeTimer.get());
+    SmartDashboard.putBoolean("a", pressA);
 
     
     max = SmartDashboard.getNumber("maxx", 0);
