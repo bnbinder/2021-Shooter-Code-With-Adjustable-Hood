@@ -16,7 +16,6 @@ public class DriveStr8 extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       deadline(new DriveStraight(8).withTimeout(6))
-      
       );
   }
 }

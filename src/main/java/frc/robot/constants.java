@@ -53,7 +53,7 @@ public final class Constants {
         //public static double oneFullRotationPIDF = 1023; //when the fuck will i use this
         //is this even right
 
-        public static double maxNativeVelocity = 16000; //TODO make sure this is right for talon fx
+        public static double maxNativeVelocity = 5000; //16000; //TODO make sure this is right for talon fx
         public static double maxShootError = 1100;
         //18000 - 1200er
         //19000 - 2800
@@ -90,7 +90,7 @@ public final class Constants {
         public static double heightGoal = 90;
         public static double cameraHeightFromRobo = 45.8;
         public static double angleNativeCameraAtRest = 0; //on 3d print part
-        public static double angleDegreeCameraRest = 24;
+        public static double angleDegreeCameraRest = 24; //18 to 24 to 25, 24 good so far
         public static double BindersConstant = 1; //:tro:
 
         public static double minimumShitSpeed = 0; //at hood rest (or minimum degrees/rad/native if not good enough)
